@@ -64,18 +64,17 @@ Update this table when a row’s *Now* changes. Do not raise *Now* for work that
 
 | Surface | Status | What you will actually see |
 |---|---|---|
-| https://goed.ut.gitsum.rest/govopps | Placeholder page | “McKenna’s still setting the table.” Not the map. |
-| Opportunity Map | Spec + Vite stub, not deployed | Stub scores an empty opportunity list. |
-| Studio (checklist / narrative / evidence / deadline) | Spec only | No Accept path in production. |
-| Intake / McKenna (qwen via LiteLLM) | Spec only | API accepts a prebuilt ticket; no live interview. |
-| Grants.gov `search2` | Not ingested | — |
-| SAM listings + opportunities | Snapshot script only | Not queried by the app. |
-| SBIR.gov | Not ingested | — |
-| USAspending history block | Spec only | No “who else got this money” on a card. |
-| Utah table (`source: utah`) | Spec only | No Federal / Utah split on a live map. |
-| Harness eval (fixtures / `--live`) | Spec only | Five cases are documents, not a runner. |
-| Scorer v0.3 | Implemented, 22 tests | Not exposed through the public URL. |
-| Session API | Implemented, 11 tests | Private repo; not on the demo host. |
+| https://goed.ut.gitsum.rest/govopps | Placeholder page | “McKenna’s still setting the table.” SPA+API can run locally; public URL still placeholder. |
+| Studio (checklist / narrative / evidence / deadline) | Implemented locally | Accept + item writes exist in the API. Not on the public URL. |
+| Intake / McKenna (qwen via LiteLLM) | Optional live path | Default `/turns` is passthrough. `live: true` needs LiteLLM. |
+| Grants.gov `search2` | Transport stub + fixtures | Live HTTP only via `live_transport`. Tests never network. |
+| SAM listings + opportunities | Snapshot script + retrieve stub | Queried only if `SAM_SNAPSHOT` is set. |
+| SBIR.gov | Transport stub + fixtures | Same as Grants.gov. |
+| USAspending history block | Attached on retrieve | Present on scored records locally. Not on the public URL. |
+| Utah table (`source: utah`) | Seeded JSON (8 rows) | Theme-filtered on retrieve. |
+| Harness eval (fixtures / `--live`) | Implemented locally | `python3 code/eval.py` — five cases pass on fixtures. |
+| Scorer v0.3 | Implemented, tested | Not exposed through the public URL. |
+| Session API | Implemented, tested | Private repo; not on the demo host. |
 | Live SAM submit | Out of scope (brief) | Will not ship. |
 | Mobile chat / `.gov` embed | Explicitly later | Not in this bounty slice. |
 
