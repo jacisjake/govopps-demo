@@ -1,0 +1,106 @@
+# GovOpps — Response Output Format
+#
+# The reading layout for a served card. Every field below is implied by a rule in
+# rag_registry.md — nothing is invented. Order = read order (registry spine + render rules).
+# Placeholders describe what goes in each field; no real content.
+#
+# Voiced   = carries McKenna's voice (persona copy).
+# Plain    = numbers, data, labels, buttons — never voiced.
+# Tiers    = which tiers render the field. A field absent for a tier is simply not shown.
+#
+# Poor / non-match renders NO card — see the two Poor sections at the end.
+
+---
+
+## Card
+
+### tier                     [Plain · all served]
+[[Strong | Maybe | Weak]]    <!-- internal color/label set by score; drives every rule below -->
+
+### opener                   [Voiced · all served]
+[[McKenna's opening line — tone scales to tier: Strong = barely-contained excitement;
+  Maybe = intrigued/type-A; Weak = contemplative head-tilt]]
+
+### agency                   [Plain · all served · SPINE]
+[[Agency name]]
+
+### award_name               [Plain · all served · SPINE]
+[[Award / opportunity name]]
+
+### set_aside_label          [Plain · when present]
+[[Set-aside label, e.g. Total Small Business Set-Aside — omit if none]]
+
+### amount                   [Plain · all served · SPINE]
+[[$ amount_min – amount_max — mark "Est." when estimated]]
+
+### timing                   [Plain · all served · SPINE]
+[[One status-driven line:
+  rolling  → "Rolling — no deadline."
+  open     → "Open, closes [[close_date]]."
+  open+tight (days_remaining < 21) → "Open, closes in [[days_remaining]] days."
+  unknown  → "Timing unconfirmed — verify before you rely on it."]]
+
+### scorecard_swot           [Voiced · all served · SPINE]
+  # Strong/Weak = full SWOT; Maybe = Strengths + Weaknesses only (diminished).
+  strengths:
+    - [[strength — voiced; eligibility hedged as "appears/likely," never guaranteed]]
+  weaknesses:
+    - [[weakness — voiced]]
+  opportunities:              [Strong, Weak only]
+    - [[opportunity — voiced; Strong frames this as the emotional peak]]
+  threats:                    [Strong, Weak only]
+    - [[threat — voiced, stated lightly]]
+
+### alignment                [Plain labels · Strong only]
+  - [[alignment label]] — [[yes | no | unknown]]
+
+### missing_block            [Maybe only]
+  # "Missing / to verify" — generated from the requirement gap, NOT a fixed checklist.
+  # Items span set-asides, certs, clearances, key-personnel, past performance,
+  # registrations, cost-share capacity, ownership status.
+  intro:
+    [[Voiced framing — self-aware humor about paperwork]]
+  items:
+    - [[gap item]] — [[status: not confirmed | required–unknown | unverified]]
+    - [[cost-share item, when present: "needs about $[[match_obligation]] in matching
+        funds" — blame the size of the ask on the program, not the founder]]
+
+### criteria_checklist       [Weak only]
+  # "Do any of these pertain to you?" — grouped requirement gap; confirming an item
+  # re-runs the set-aside / geography gates and may promote the match.
+  hedge_copy:
+    [[Voiced honest hedge — plainly "not a strong match"; blame the system's difficulty,
+      never the founder or the opportunity; "one tiny detail can flip it" framing]]
+  ownership_and_team:
+    - [ ] [[ownership / clearance / PI criterion]]
+  company_credentials_and_location:
+    - [ ] [[HUBZone / rural / certification / past-performance criterion]]
+
+### next_steps               [Strong, Maybe only]
+  - [[next-step action — plain; may include a registration or certification action]]
+
+### cta                      [Plain · tier-fixed]
+[[Strong → "Begin Application"  |  Maybe → "Go"  |  Weak → none]]
+
+---
+
+## Poor / non-match — per-opportunity
+
+# No card. No field. The opportunity is silently excluded from results.
+# No red card, no "not a fit" notice, no reason shown to the founder.
+(nothing rendered)
+
+---
+
+## Poor / non-match — whole-portfolio fallback
+
+# Rendered ONLY when every candidate is Poor/Weak. One message in place of results.
+
+### no_match_message         [Voiced]
+[[Acknowledge no strong match; blame the system's lag, not the founder; refuse to
+  dress up an adjacent option]]
+
+### what_can_change_this     [Plain prompts, voiced lead-in]
+  - [[Disclose set-aside status — generated from the same requirement-gap logic]]
+  - [[Revisit as new opportunities post]]
+  - [[Consider adjacent non-dilutive paths (state programs, accelerators)]]

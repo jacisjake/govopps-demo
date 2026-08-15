@@ -1,0 +1,83 @@
+# GovOpps — example record: MAYBE match (data only; registry voices it)
+# Conforms to scoring_schema.md v0.3 §11.
+# Teaching point: relevance is HIGH (0.78) but the tier is capped to Maybe by an open
+# requirement gap (CMMC, SAM) — the cap is a ceiling, not a floor. All four named gates PASS.
+
+tier: Maybe
+relevance: 0.783
+match_pct: 78
+mechanism: revenue            # contract = government as customer
+
+agency: Department of Homeland Security — CISA
+award_name: Combined Synopsis — Managed Threat-Detection Services
+set_aside_label: Total Small Business Set-Aside
+amount_min: 500000
+amount_max: 2000000
+amount_qualifier: estimated
+
+timing:
+  status: open
+  close_date: 2026-09-15
+  days_remaining: 31          # > 21 -> timing PASS
+
+cost_share_pct: 0             # procurement contract; no match required
+match_obligation: 0
+
+retrieved_at: 2026-08-14
+
+source: SAM.gov
+source_id: CISA-2026-RFQ-0517
+url: [[opportunity_url]]
+
+gates:
+  eligibility: PASS           # for-profit small business is eligible
+  set_aside: PASS             # small-business set-aside + confirmed small business
+  geography: PASS
+  timing: PASS
+  unknowns: present           # <-- from requirement_gap below, NOT from the four gates (§2.1)
+
+facets:
+  domain:
+    score: 0.85
+    reason: Managed threat detection is a direct services match.
+  mechanism:
+    score: 0.70
+    reason: Revenue contract; aligns with a mixed funding strategy.
+  award_size:
+    score: 1.00
+    reason: Estimated $500K–$2M overlaps the $1M–$3M need.
+  precedent:
+    score: 0.40
+    reason: No historical-award signal supplied; neutral-low.
+
+swot:                          # Maybe = Strengths + Weaknesses only (diminished SWOT)
+  strengths:
+    - Strong domain fit
+    - Small-business set-aside the profile appears to qualify for
+  weaknesses:
+    - Likely requires past-performance history
+    - Likely requires a facility posture
+
+requirement_gap:              # generated per §2.1; each item caps the tier at yellow
+  - item: SAM.gov registration (UEI)
+    status: not confirmed
+  - item: CMMC Level 2 / NIST 800-171 compliance
+    status: required — unknown
+  - item: Facility clearance or cleared personnel
+    status: may be needed — none on file
+  - item: Ownership breakdown for the set-aside
+    status: appears to fit — unverified
+  - item: Primary NAICS 541512 alignment
+    status: unverified
+
+next_steps:
+  - class: registration
+    action: Confirm or complete your SAM.gov registration
+  - class: gap-closing
+    action: Confirm CMMC / NIST 800-171 posture (or start the assessment)
+  - class: gap-closing
+    action: Verify your primary NAICS code
+  - class: upgrade
+    action: Consider HUBZone certification — it would unlock additional set-aside contracts like this one
+
+cta: Go

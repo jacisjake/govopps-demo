@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GovOpps — Harness C</title>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "base",
+    darkMode: false,
+    themeVariables: {
+      darkMode: false,
+      background: "#e8f0ea",
+      fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif",
+      fontSize: "15px",
+      primaryColor: "#fffdf8",
+      primaryTextColor: "#1a241c",
+      primaryBorderColor: "#1a241c",
+      secondaryColor: "#f3ebe0",
+      tertiaryColor: "#fffdf8",
+      lineColor: "#1a241c",
+      defaultLinkColor: "#1a241c",
+      arrowheadColor: "#1a241c",
+      edgeLabelBackground: "#e8f0ea",
+      clusterBkg: "#f3ebe0",
+      clusterBorder: "#1a241c",
+      titleColor: "#1a241c",
+      actorBkg: "#fffdf8",
+      actorBorder: "#1a241c",
+      actorTextColor: "#1a241c",
+      actorLineColor: "#1a241c",
+      signalColor: "#1a241c",
+      signalTextColor: "#1a241c",
+      labelBoxBkgColor: "#c45c26",
+      labelBoxBorderColor: "#c45c26",
+      labelTextColor: "#fffdf8",
+      noteBkgColor: "#f3ebe0",
+      noteTextColor: "#1a241c",
+      noteBorderColor: "#1a241c",
+      sequenceNumberColor: "#fffdf8",
+      mainBkg: "#fffdf8",
+      nodeBorder: "#1a241c",
+      nodeTextColor: "#1a241c"
+    },
+    flowchart: { curve: "linear", padding: 16, htmlLabels: true, wrappingWidth: 220 },
+    sequence: { actorMargin: 36, messageMargin: 40, useMaxWidth: true }
+  });
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a241c;
+    --paper: #fffdf8;
+    --rule: #1a241c;
+    --mute: #5c6b5e;
+    --fill: #f3ebe0;
+    --sage: #e8f0ea;
+    --stamp: #c45c26;
+    --pass: #1f6b3a;
+    --fail: #9b1d2e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.55 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+  .sheet {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 28px 96px;
+  }
+  header.mast {
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .kicker {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stamp);
+    font-weight: 600;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 10px 0 16px;
+  }
+  .lede { color: var(--mute); max-width: 62ch; }
+  nav.toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 22px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+  }
+  nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+  nav.toc a:hover { color: var(--stamp); border-color: var(--stamp); }
+  h2 {
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    margin: 56px 0 14px;
+    padding-top: 8px;
+    border-top: 1px solid var(--rule);
+  }
+  h3 { font-size: 16px; margin: 28px 0 10px; }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  ul, ol { margin: 0 0 16px 1.2em; max-width: 68ch; }
+  li { margin: 0 0 6px; }
+  strong { font-weight: 600; }
+  code, .mono {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.86em;
+  }
+  pre:not(.mermaid) {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 16px 0 22px;
+  }
+  .diagram {
+    background: var(--sage);
+    border: 1px solid var(--rule);
+    padding: 20px 12px 8px;
+    margin: 18px 0 28px;
+    overflow-x: auto;
+  }
+  .diagram .caption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    padding: 0 8px 12px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 12px 0 24px;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 8px 10px 8px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--rule) 28%, transparent);
+  }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    font-weight: 500;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0 24px;
+  }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    background: var(--fill);
+  }
+  .card h3 { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  .stamp {
+    display: inline-block;
+    border: 2px solid var(--stamp);
+    color: var(--stamp);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    font-weight: 600;
+  }
+  .pass { color: var(--pass); }
+  .fail { color: var(--fail); }
+  footer {
+    margin-top: 64px;
+    padding-top: 16px;
+    border-top: 2px solid var(--rule);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--mute);
+  }
+  .diagram svg { background: transparent !important; max-width: 100%; }
+  .diagram .mermaid {
+    background: transparent !important;
+    color: var(--ink);
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    white-space: normal;
+    overflow: visible;
+  }
+  .diagram .edgePath path,
+  .diagram path.flowchart-link,
+  .diagram .flowchart-link,
+  .diagram .edge-thickness-normal,
+  .diagram .messageLine0,
+  .diagram .messageLine1,
+  .diagram .actor-line,
+  .diagram .actor-man-line,
+  .diagram line,
+  .diagram .loopLine {
+    stroke: #1a241c !important;
+    stroke-width: 1.75px !important;
+  }
+  .diagram marker path,
+  .diagram .arrowheadPath,
+  .diagram .arrowMarkerPath {
+    fill: #1a241c !important;
+    stroke: #1a241c !important;
+  }
+  .diagram rect.actor {
+    fill: #fffdf8 !important;
+    stroke: #1a241c !important;
+  }
+  .diagram .label,
+  .diagram .nodeLabel,
+  .diagram .edgeLabel,
+  .diagram .messageText,
+  .diagram .loopText,
+  .diagram .typeText,
+  .diagram text {
+    fill: #1a241c !important;
+    color: #1a241c !important;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="mast">
+    <div class="kicker">GovOpps · design note · not a spec</div>
+    <h1>Harness C — one facet object, two consumers</h1>
+    <p class="lede">
+      C is not two systems that happen to share a vibe. It is one frozen
+      <em>facet ticket</em>. The runtime writes it from conversation and
+      artifacts. Deterministic search reads it. The eval runner asserts it.
+      The model never searches, never tiers, never invents a URL.
+    </p>
+    <p><span class="stamp">option C</span></p>
+    <nav class="toc">
+      <a href="#what">What C is</a>
+      <a href="#ticket">The ticket</a>
+      <a href="#runtime">Runtime</a>
+      <a href="#eval">Eval</a>
+      <a href="#may">May / may not</a>
+      <a href="#open">Still open</a>
+    </nav>
+  </header>
+
+  <h2 id="what">What C looks like</h2>
+  <p>
+    Founder language is messy: a URL, a deck, a pasted pitch, a chat turn.
+    Federal search is not. Grants.gov, SAM, SBIR, USAspending, and regional
+    sources want codes, agencies, mechanisms, dates, geography, set-asides.
+  </p>
+  <p>
+    The harness is the translator <strong>and</strong> the lie detector.
+    Same schema. Runtime emits a ticket. Tests open the same ticket and
+    mark pass / fail against the five brief cases (and later, live pulls).
+  </p>
+
+  <div class="diagram">
+    <div class="caption">Fig 1 · C is a fork after the ticket, not two pipelines</div>
+    <div class="mermaid">
+flowchart LR
+  IN["Chat + URL + deck + one-pager"] --> H["Harness runtime<br/>qwen extracts / confirms"]
+  H --> T["Facet ticket<br/>frozen JSON"]
+  T --> S["Deterministic search<br/>Grants.gov · SAM · SBIR<br/>USAspending · regional"]
+  T --> E["Eval runner<br/>five brief cases"]
+  S --> MAP["Opportunity Map"]
+  E --> REP["Pass / fail report"]
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Runtime half</h3>
+      <p>Turns this session’s evidence into one ticket. Interview may revise the ticket. Search only sees the ticket, never the raw pitch.</p>
+    </div>
+    <div class="card">
+      <h3>Eval half</h3>
+      <p>Feeds the five mock companies through the same runtime (or a recorded ticket) and checks the ticket — not McKenna’s prose — against expected facets.</p>
+    </div>
+  </div>
+
+  <h2 id="ticket">The facet ticket</h2>
+  <p>
+    This is the contract. If a field is not on the ticket, search may not
+    use it. If a field is on the ticket, eval can assert it. Provenance
+    stays on every field: <code>stated</code> · <code>inferred</code> · <code>unknown</code>.
+  </p>
+<pre>{
+  "ticket_id": "ses_…",
+  "profile": {
+    "name": "Cyberdriven",
+    "concepts": ["threat detection", "SOC automation"],
+    "naics": [{"code": "541512", "prov": "inferred"}],
+    "state": "UT",
+    "intent": "both",
+    "need": {"min": 1000000, "max": 3000000},
+    "attributes": {
+      "set_asides.8a": "not_held",
+      "certs.CMMC": "unknown"
+    }
+  },
+  "query": {
+    "keywords_broad": ["cybersecurity", "intrusion detection"],
+    "keywords_precise": ["endpoint detection and response"],
+    "agencies": ["DoD", "DHS"],
+    "mechanisms": ["rd", "contract"],
+    "geography": ["UT", "federal"],
+    "award_band": [1000000, 3000000],
+    "must_verify": ["CMMC", "clearance"]
+  },
+  "search_plan": {
+    "grants_gov":  { "elig": "small_business", "cats": ["science_technology"] },
+    "sam_opps":    { "ncode": ["541512"], "ptype": ["o", "k"] },
+    "sbir":        { "agency": ["DHS", "DOD"], "phase": ["I", "II"] },
+    "usaspending": { "naics": ["541512"], "award_type": ["grant", "contract"] },
+    "regional":    { "state": "UT", "themes": ["defense", "cyber"] }
+  }
+}</pre>
+  <p>
+    <code>profile</code> is who they are. <code>query</code> is the translation
+    (the brief’s central job). <code>search_plan</code> is that translation
+    compiled into <strong>per-source parameters</strong> — the deterministic
+    features. qwen may propose a plan; a compiler (rules, not the model)
+    has to accept it before any HTTP call.
+  </p>
+
+  <h2 id="runtime">Runtime — write the ticket, then search</h2>
+  <p>
+    One question at a time. Each turn updates the ticket, then the compiler
+    asks: would another question change retrieve? If no, freeze and search.
+  </p>
+
+  <div class="diagram">
+    <div class="caption">Fig 2 · one turn. Model writes fields; compiler freezes; APIs run blind to prose</div>
+    <div class="mermaid">
+sequenceDiagram
+  participant F as Founder
+  participant M as McKenna / qwen
+  participant C as Compiler
+  participant T as Facet ticket
+  participant A as Source APIs
+
+  F->>M: pitch, URL, or answer
+  M->>T: patch fields + provenance
+  T->>C: validate / compile search_plan
+  alt plan would collapse the set
+    C->>M: surface tradeoff, do not silently drop
+    M->>F: one discriminating question
+  else ticket is sufficient
+    C->>T: freeze
+    C->>A: Grants.gov · SAM · SBIR · USAspending · regional
+    A-->>C: normalized rows
+    C->>F: Opportunity Map (score, not chat)
+  end
+    </div>
+  </div>
+
+  <p>After freeze, scoring is the existing v0.3 gates + weights. History (USAspending / SBIR awards) is attached to every served card as evidence, not as a vibe.</p>
+
+  <h2 id="eval">Eval — same ticket, known companies</h2>
+  <p>
+    The five brief startups are fixtures, not prompts we hope go well.
+    Each fixture is: raw input (the mock site / pitch) + an expected ticket
+    (facets that must appear) + expected map shape (sources hit, agencies,
+    honest no-match for Rallytime).
+  </p>
+
+  <div class="diagram">
+    <div class="caption">Fig 3 · eval does not grade McKenna’s jokes. It grades the ticket and the map</div>
+    <div class="mermaid">
+flowchart TD
+  FX["Fixture<br/>Cyberdriven pitch + mock HTML"] --> RT["Runtime<br/>same code path as prod"]
+  RT --> TK["Emitted ticket"]
+  RT --> MP["Emitted map + history blocks"]
+  EXP["Expected ticket<br/>NAICS, agencies, 8a not_held"] --> CMP["Diff"]
+  TK --> CMP
+  WANT["Expected map shape<br/>DoD/DHS present · 8a RED · history nonempty"] --> CMP2["Diff"]
+  MP --> CMP2
+  CMP --> R{pass?}
+  CMP2 --> R
+  R -->|yes| OK["Case 04 PASS"]
+  R -->|no| NO["Case 04 FAIL<br/>missing facet / missing source / invented URL"]
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Case</th><th>Ticket must contain</th><th>Map must show</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01 Cadence</td>
+        <td>workforce / health IT expansion, not only “AI healthcare”; intent capital</td>
+        <td>NIH/HHS/NSF + SBIR; history on those cards</td>
+      </tr>
+      <tr>
+        <td>02 Ridgeline</td>
+        <td>mechanisms include contract; NAICS manufacturing / aero</td>
+        <td>DoD/NASA/DOE <em>and</em> procurement, not grants only</td>
+      </tr>
+      <tr>
+        <td>03 Aquora</td>
+        <td>cost-share capacity unknown; water / infra facets</td>
+        <td>EPA/DOE; cost-share items yellow, not Strong</td>
+      </tr>
+      <tr>
+        <td>04 Cyberdriven</td>
+        <td><code>8a: not_held</code> once asked — silence is not a fail</td>
+        <td>DoD/DHS + SBIR green; 8(a) suppressed; history present</td>
+      </tr>
+      <tr>
+        <td>05 Rallytime</td>
+        <td>honest thin translation; do not over-expand to federal core</td>
+        <td><code>honest_no_match: true</code>; no dressed-up consumer grant</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Failures are structured: <span class="fail">missing required facet</span>,
+    <span class="fail">forbidden inference</span> (ownership guessed),
+    <span class="fail">source not queried</span>,
+    <span class="fail">history block empty</span>,
+    <span class="fail">URL not in retrieve set</span>.
+    A pretty card with a wrong ticket is a fail.
+  </p>
+
+  <h2 id="may">What the model may do</h2>
+  <table>
+    <thead><tr><th>May</th><th>May not</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Extract profile fields from evidence</td>
+        <td>Call Grants.gov / SAM / SBIR itself</td>
+      </tr>
+      <tr>
+        <td>Propose query expansions and a search_plan</td>
+        <td>Emit a tier, a match %, or “you are eligible”</td>
+      </tr>
+      <tr>
+        <td>Ask one question that would change the ticket</td>
+        <td>Infer WOSB / 8(a) / clearance from a name or photo</td>
+      </tr>
+      <tr>
+        <td>Write McKenna copy <em>after</em> scoring, from the record</td>
+        <td>Invent a URL or a recipient company</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="open">Still open — for the next conversation</h2>
+  <ol>
+    <li>Who compiles <code>search_plan</code> — pure rules, or qwen-propose + rules-accept?</li>
+    <li>Is the ticket append-only (every turn a new version) or mutating?</li>
+    <li>Eval: live APIs, or recorded HTTP fixtures so case 01 cannot flake on Grants.gov?</li>
+    <li>Regional/local: Utah GOED / state finance / university / municipal — which corpora land in v1?</li>
+  </ol>
+
+  <footer>
+    GovOpps · Harness C briefing · file docs/harness-c.html · 2026-08-15
+  </footer>
+</div>
+</body>
+</html>

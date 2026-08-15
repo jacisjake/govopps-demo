@@ -1,0 +1,186 @@
+========================================================================
+FOUNDERFINDER — RAG RESPONSE REGISTRY (text exemplars)
+========================================================================
+
+PURPOSE
+  Retrieval corpus of canonical response cards, one per match tier. The
+  copilot computes a tier for each opportunity (see scoring schema), then
+  retrieves the matching exemplar below and imitates its shape, voice, and
+  section structure — filling it with the real opportunity's data.
+
+HOW TO USE
+  1. Score the opportunity -> tier (Strong / Maybe / Weak / Poor).
+  2. Retrieve the record whose TIER matches.
+  3. Reproduce its SECTIONS and TONE with the live opportunity's fields.
+  4. Obey the CTA RULE and the RENDER RULE for that tier exactly.
+
+GLOBAL RULES
+  - Every served card shares a spine: Agency / Award name, $ amount / timing,
+    Scorecard (SWOT).
+  - Detail scales inversely with confidence: Strong promises, Weak explains.
+  - Never assert eligibility as a guarantee. Use "appears / likely / verify."
+  - POOR / NON-MATCH is never rendered as a card (see RECORD 4).
+
+Field key:  [[brackets]] = slot filled from live opportunity/profile data.
+
+========================================================================
+RECORD 1
+TIER:            Strong match      (internal: GREEN / "Likely Fit")
+RETRIEVE WHEN:   all gates pass, no unknowns, relevance >= 0.70
+CTA RULE:        show "Begin Application" (commit action)
+RENDER RULE:     full SWOT + Alignment + Next steps
+------------------------------------------------------------------------
+EXAMPLE RESPONSE
+
+  AGENCY / AWARD
+  Department of the Air Force — AFWERX
+  SBIR Phase II: AI-Enabled Network Threat Detection
+
+  VALUE / TIMING
+  $750,000 – $1,800,000   ·   Open, closes Oct 1, 2026
+
+  SCORECARD (SWOT)
+  Strengths:     U.S. small business, eligible. Direct domain match —
+                 AI-driven threat detection. Active R&D component.
+  Weaknesses:    Requires a technical volume and prior feasibility work;
+                 award decision typically 3–6 months out.
+  Opportunities: Phase II sets up a Phase III sole-source CONTRACT — a
+                 path to government revenue, not just capital.
+  Threats:       Competitive topic; must demonstrate dual-use.
+
+  ALIGNMENT (why you're a potential fit)
+  - U.S.-based small business ......... yes
+  - AI technology ..................... yes
+  - Cybersecurity application ......... yes
+  - Active R&D ........................ yes
+  - Need ($1M–$3M) fits award band .... yes
+
+  NEXT STEPS
+  - Confirm an active SAM.gov entity registration (UEI).
+  - Read the full solicitation: [[opportunity_url]]
+  - Note the deadline: Oct 1, 2026.
+  - Draft the technical volume against the topic requirements.
+
+  [ Begin Application ]
+
+========================================================================
+RECORD 2
+TIER:            Maybe match       (internal: YELLOW / "Verify Eligibility")
+RETRIEVE WHEN:   relevance >= 0.45, OR any gate returns UNKNOWN
+CTA RULE:        show "Go" (explore action, not a commitment)
+RENDER RULE:     diminished SWOT + "Missing" block + Next steps (may include
+                 a certification action)
+------------------------------------------------------------------------
+EXAMPLE RESPONSE
+
+  AGENCY / AWARD
+  Department of Homeland Security — CISA
+  Combined Synopsis: Managed Threat-Detection Services
+  (Total Small Business Set-Aside)
+
+  VALUE / TIMING
+  Est. $500,000 – $2,000,000   ·   Responses due Sep 15, 2026
+
+  SCORECARD (SWOT — diminished)
+  Strengths:     Strong domain fit. Small-business set-aside you appear
+                 to qualify for.
+  Weaknesses:    Past-performance history and a facility posture may be
+                 expected.
+
+  MISSING / TO VERIFY
+  - Active SAM.gov registration not confirmed.
+  - NAICS 541512 alignment on your profile is unverified.
+  - No evidence yet of required certifications.
+
+  NEXT STEPS
+  - Confirm or complete your SAM.gov registration.
+  - Verify your primary NAICS code.
+  - Consider HUBZone certification — it would unlock additional
+    set-aside contracts like this one.
+
+  [ Go ]
+
+========================================================================
+RECORD 3
+TIER:            Weak match        (internal: ORANGE / "Adjacent")
+RETRIEVE WHEN:   relevance >= 0.25 (below Maybe), gates not failed
+CTA RULE:        NO apply button. Present a criteria question instead.
+RENDER RULE:     SWOT + honest hedge copy + INTERACTIVE criteria checklist.
+                 Confirming a criterion re-runs the set-aside / geography
+                 gates and MAY promote this match to a higher tier.
+------------------------------------------------------------------------
+EXAMPLE RESPONSE
+
+  AGENCY / AWARD
+  Department of Energy — Technology Commercialization Fund
+  Early-Stage Dual-Use Innovation (general)
+
+  VALUE / TIMING
+  $100,000 – $500,000   ·   Rolling
+
+  SCORECARD (SWOT)
+  Strengths:     Funds early-stage dual-use technology.
+  Weaknesses:    Not cyber-specific; your AI work is adjacent, not central,
+                 to this program's focus.
+  Opportunities: Could seed a pilot outside your core federal-cyber path.
+  Threats:       Low domain overlap — likely a stretch on relevance.
+
+  WHY WE STILL SHARED THIS
+  This isn't a very strong match. We surfaced it because it funds
+  early-stage dual-use technology and your work is adjacent — not because
+  we think it's a clear fit.
+
+  DO ANY OF THESE CRITERIA PERTAIN TO YOU?
+  (Confirming one may improve this match and unlock reserved opportunities.)
+  - [ ] Woman-owned business
+  - [ ] Veteran-owned / service-disabled veteran-owned
+  - [ ] HUBZone (principal office in a HUBZone)
+  - [ ] 8(a) / socially & economically disadvantaged
+  - [ ] Native American / Tribal-owned
+  - [ ] Rural location
+
+  (No application step yet — answer the above and we'll re-check eligibility.)
+
+========================================================================
+RECORD 4
+TIER:            Poor / non-match  (internal: RED / "Probably Not a Fit")
+RETRIEVE WHEN:   any gate FAILS, or relevance < 0.25
+CTA RULE:        none
+RENDER RULE:     ***DO NOT SERVE AS A CARD.*** A poor match is withheld
+                 from the founder entirely. Serving a bad opportunity costs
+                 the founder's time and trust even when labeled — so it is
+                 suppressed, not shown.
+------------------------------------------------------------------------
+BEHAVIOR (two distinct cases)
+
+  PER-OPPORTUNITY (one bad match among good ones)
+  Output: nothing. The opportunity is silently excluded from the results.
+  Do NOT render a red card, a "not a fit" notice, or a rejection reason to
+  the founder. (Reasons may be logged internally for tuning only.)
+
+  WHOLE-PORTFOLIO (every candidate is poor / weak)
+  When nothing clears the no-match bar, do not return a wall of silence.
+  Return one honest, plain-language message in place of results:
+
+  EXAMPLE RESPONSE (portfolio-level, only when NO strong/maybe exists)
+
+    No strong match right now.
+
+    Federal grants and contracts look like a weak fit for your company at
+    the moment — the closest options are adjacent, not core. That's an
+    honest read, not a gap in our search.
+
+    What can change this:
+    - Tell us about set-aside status (woman-owned, veteran, HUBZone, 8(a),
+      Native American, rural) — it can unlock reserved opportunities.
+    - Revisit as new opportunities post; we'll watch for better fits.
+    - Consider adjacent non-dilutive paths (state programs, accelerators).
+
+  RATIONALE
+  Correctly withholding a bad opportunity is a success, not a gap: no wasted
+  application time, no damaged trust. Saying "probably not a fit" out loud
+  earns credibility that a forced, hallucinated match destroys.
+
+========================================================================
+END OF REGISTRY
+========================================================================

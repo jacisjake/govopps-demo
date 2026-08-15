@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyberdriven — AI threat detection for growing teams</title>
+<meta name="description" content="Cyberdriven is AI-powered threat detection built for small and mid-sized organizations. Utah-based small business, SOC 2 Type II, CMMC Level 2 in progress. Prior DHS SBIR Phase I recipient.">
+<style>
+  :root{--bg:#0a0e17;--panel:#111826;--ink:#e8eef6;--muted:#8 da;--muted:#8b9bb4;--line:#1e2a3d;--neon:#38e8b0;--blue:#4a86ff;--white:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  a{color:var(--neon);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,14,23,.86);backdrop-filter:blur(8px);z-index:5}
+  nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;color:#fff}
+  .brand span{color:var(--neon)}
+  nav ul{display:flex;gap:26px;list-style:none;font-size:14px;font-weight:500}
+  nav ul a{color:var(--muted)}
+  .btn{display:inline-block;background:var(--neon);color:#04231a;padding:11px 20px;border-radius:9px;font-weight:700;font-size:14px}
+  .btn.ghost{background:transparent;color:var(--neon);border:1px solid #2a5f4f}
+  .hero{padding:96px 0 76px;background:radial-gradient(1200px 400px at 50% -10%,rgba(56,232,176,.12),transparent)}
+  .pill{display:inline-block;border:1px solid #234;background:#0e1622;color:var(--neon);font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:100px;letter-spacing:.02em}
+  h1{font-size:54px;line-height:1.06;letter-spacing:-.03em;margin:20px auto 16px;max-width:800px;text-align:center}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--neon),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:20px;color:var(--muted);max-width:600px;margin:0 auto 30px;text-align:center}
+  .cta-row{display:flex;gap:14px;justify-content:center}
+  section{padding:66px 0}
+  .eyebrow{color:var(--neon);font-weight:700;font-size:13px;letter-spacing:.09em;text-transform:uppercase}
+  h2{font-size:34px;letter-spacing:-.02em;margin:8px 0 30px;color:#fff}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .card h3{font-size:18px;margin-bottom:8px;color:#fff}
+  .card p{color:var(--muted);font-size:15px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border:1px solid var(--line);border-radius:16px;padding:30px}
+  .stats .n{font-size:32px;font-weight:800;color:var(--neon)}
+  .stats .l{font-size:13px;color:var(--muted);margin-top:4px}
+  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .tier.feat{border-color:var(--neon);box-shadow:0 0 0 1px rgba(56,232,176,.3)}
+  .tier h3{font-size:17px;color:#fff}
+  .tier .amt{font-size:30px;font-weight:800;color:#fff;margin:6px 0}
+  .tier .amt small{font-size:14px;color:var(--muted);font-weight:500}
+  .tier ul{list-style:none;margin:14px 0 0;font-size:14px;color:var(--muted)}
+  .tier li{padding:6px 0;border-top:1px solid var(--line)}
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .person{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .avatar{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--blue));margin-bottom:12px}
+  .person h4{font-size:16px;color:#fff}
+  .person .role{color:var(--neon);font-size:13px;font-weight:600;margin-bottom:8px}
+  .person p{font-size:13.5px;color:var(--muted)}
+  .trust{border:1px solid var(--line);border-radius:16px;padding:32px;display:flex;gap:36px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .badges{display:flex;gap:12px;flex-wrap:wrap}
+  .badge{background:#0e1622;border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-weight:600;font-size:13px;color:var(--ink)}
+  footer{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-size:14px}
+  .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;margin-bottom:22px}
+  footer strong{color:#fff;display:block;margin-bottom:6px}
+  @media(max-width:820px){.grid3,.team,.price{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:38px}.fgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+  <div class="brand">Cyber<span>driven</span></div>
+  <ul><li><a href="#product">Product</a></li><li><a href="#platform">Platform</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#trust">Trust</a></li><li><a href="#team">Team</a></li></ul>
+  <a class="btn" href="#start">Start free trial</a>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+  <div style="text-align:center"><span class="pill">AI threat detection · built for SMBs</span></div>
+  <h1>Enterprise-grade threat detection for teams <em>without a SOC</em>.</h1>
+  <p class="sub">Cyberdriven watches your network, endpoints, and cloud, and uses AI to surface real threats — not 500 alerts a day. Security that a lean team can actually run.</p>
+  <div class="cta-row"><a class="btn" href="#start">Start free trial</a><a class="btn ghost" href="#platform">See the platform</a></div>
+</div></div>
+
+<section id="product"><div class="wrap">
+  <div class="eyebrow">Why Cyberdriven</div>
+  <h2>Detection that thinks like an analyst.</h2>
+  <div class="grid3">
+    <div class="card"><h3>AI triage</h3><p>Our models correlate signals across your stack and escalate the handful that matter, with a plain-language explanation of why.</p></div>
+    <div class="card"><h3>Autonomous response</h3><p>Contain a compromised endpoint or revoke a token automatically, with guardrails you set.</p></div>
+    <div class="card"><h3>No SOC required</h3><p>Built for organizations of 20–500 people who need real detection without hiring a night shift.</p></div>
+  </div>
+</div></section>
+
+<section id="platform" style="padding-top:0"><div class="wrap">
+  <div class="stats">
+    <div><div class="n">$2M</div><div class="l">annual recurring revenue</div></div>
+    <div><div class="n">140+</div><div class="l">customers</div></div>
+    <div><div class="n">22</div><div class="l">employees</div></div>
+    <div><div class="n">1.2M</div><div class="l">threats triaged / day</div></div>
+  </div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="eyebrow">Pricing</div>
+  <h2>Self-serve, scales with you.</h2>
+  <div class="price">
+    <div class="tier"><h3>Starter</h3><div class="amt">$499<small>/mo</small></div><ul><li>Up to 50 endpoints</li><li>AI triage</li><li>Email support</li></ul></div>
+    <div class="tier feat"><h3>Growth</h3><div class="amt">$1,900<small>/mo</small></div><ul><li>Up to 250 endpoints</li><li>Autonomous response</li><li>Cloud + identity coverage</li></ul></div>
+    <div class="tier"><h3>Enterprise</h3><div class="amt">Custom</div><ul><li>Unlimited scale</li><li>SSO, audit, SLAs</li><li>Dedicated engineer</li></ul></div>
+  </div>
+</div></section>
+
+<section id="trust" style="background:var(--panel)"><div class="wrap">
+  <div class="eyebrow">Trust & compliance</div>
+  <h2>Security you can prove.</h2>
+  <div class="trust">
+    <p style="max-width:440px;color:var(--muted)">Cyberdriven is a U.S. small business. We're SOC 2 Type II certified and currently pursuing CMMC Level 2 to support federal and defense-adjacent customers. Our platform maps to NIST 800-171 controls out of the box.</p>
+    <div class="badges">
+      <div class="badge">SOC 2 Type II</div>
+      <div class="badge">CMMC Level 2 (in progress)</div>
+      <div class="badge">NIST 800-171</div>
+      <div class="badge">US small business</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="team"><div class="wrap">
+  <div class="eyebrow">Team</div>
+  <h2>Operators who've defended real networks.</h2>
+  <div class="team">
+    <div class="person"><div class="avatar"></div><h4>Alex Trujillo</h4><div class="role">Co-founder & CEO</div><p>Former defense-sector security engineer; holds an active U.S. Secret clearance. Led detection engineering before founding Cyberdriven in 2021.</p></div>
+    <div class="person"><div class="avatar"></div><h4>Nina Osei</h4><div class="role">Co-founder & CTO</div><p>Machine-learning lead specializing in anomaly detection. Architected Cyberdriven's triage models.</p></div>
+    <div class="person"><div class="avatar"></div><h4>Ryan Beck</h4><div class="role">Head of Federal</div><p>Runs Cyberdriven's public-sector work, including a prior DHS SBIR Phase I on AI-driven intrusion detection.</p></div>
+  </div>
+</div></section>
+
+<section id="start" style="background:var(--panel)"><div class="wrap">
+  <div class="eyebrow">Get started</div>
+  <h2>Spin up in an afternoon.</h2>
+  <p style="color:var(--muted);max-width:560px;margin-bottom:22px">Self-serve onboarding, no sales call required. Start a 14-day free trial and connect your first endpoints today.</p>
+  <a class="btn" href="https://app.cyberdriven.io/signup">Start free trial</a>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><div class="brand" style="margin-bottom:8px">Cyber<span>driven</span></div><p>AI threat detection for growing teams.</p></div>
+    <div><strong>Company</strong>Founded 2021<br>22 employees<br>Series A · $5M raised</div>
+    <div><strong>Headquarters</strong>Lehi, Utah<br>hello@cyberdriven.io</div>
+  </div>
+  <div>© 2026 Cyberdriven, Inc. · U.S. small business · SOC 2 Type II · CMMC Level 2 in progress · Prior DHS SBIR recipient</div>
+</div></footer>
+</body>
+</html>

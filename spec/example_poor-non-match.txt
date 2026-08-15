@@ -1,0 +1,67 @@
+# GovOpps — example record: POOR / non-match (data only)
+# Conforms to scoring_schema.md v0.3 §11. NEVER rendered as a card (§10).
+# Two ways to land here: any gate FAILS, or relevance < 0.25.
+# Slots [[...]] are filled from live data; this file documents the shape + the two fail paths.
+
+tier: Poor
+relevance: [[relevance]]
+match_pct: null               # never displayed
+
+mechanism: [[revenue|capital|capital_debt]]
+
+agency: [[agency]]
+award_name: [[award_name]]
+amount_min: [[amount_min]]
+amount_max: [[amount_max]]
+
+timing:
+  status: [[open|closed|rolling|unknown]]
+  close_date: [[close_date|null]]
+  days_remaining: [[n|null]]
+
+cost_share_pct: [[pct|0]]
+match_obligation: [[amount|0]]
+
+retrieved_at: [[retrieved_at]]
+
+source: [[source]]
+source_id: [[source_id]]
+url: [[opportunity_url]]
+
+gates:
+  eligibility: [[PASS|FAIL]]
+  set_aside: [[PASS|FAIL]]
+  geography: [[PASS|FAIL]]
+  timing: [[PASS|FAIL]]
+  unknowns: [[none|present]]
+
+fail_condition: any gate FAILS OR relevance < 0.25
+
+# --- The v0.3 suppression paths, enumerated (all route here, all suppressed) ---
+suppression_examples:
+  - eligibility FAIL      # nonprofit-only program; a for-profit startup can't apply
+  - set_aside FAIL        # reserved for a status the company is CONFIRMED not to hold (§1)
+  - geography FAIL        # restricted to a different state
+  - timing FAIL           # closed
+  - cost_share FAIL       # founder CONFIRMED cannot fund the match (§2.1) — affordability suppression
+  - relevance < 0.25      # genuinely off-domain
+
+render: none
+cta: none
+
+# Per-opportunity: silently excluded from results; no card, no reason shown to the founder.
+# Reason may be logged internally for tuning only.
+
+portfolio_fallback_inputs:
+  # Used only when EVERY candidate is Poor/Weak. Registry generates the whole-portfolio message.
+  set_aside_prompts:
+    - Woman-owned
+    - Veteran
+    - HUBZone
+    - 8(a)
+    - Native American
+    - Rural
+  alternate_paths:
+    - State programs
+    - Accelerators
+    - Other adjacent non-dilutive funding

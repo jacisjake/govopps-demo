@@ -1,0 +1,87 @@
+# GovOpps — example record: STRONG match (data only; registry voices it)
+# Conforms to scoring_schema.md v0.3 §11 Record contract.
+
+tier: Strong
+relevance: 0.826
+match_pct: 83
+mechanism: capital            # SBIR R&D = non-dilutive capital
+
+agency: Department of the Air Force — AFWERX
+award_name: SBIR Phase II — AI-Enabled Network Threat Detection
+amount_min: 750000
+amount_max: 1800000
+
+timing:
+  status: open
+  close_date: 2026-10-01
+  days_remaining: 47          # > min_days_to_apply (21) -> timing PASS
+
+cost_share_pct: 0             # SBIR carries no cost share
+match_obligation: 0
+
+retrieved_at: 2026-08-14      # within max_data_age_days (7) -> fresh
+
+source: SBIR.gov
+source_id: AF-2026-B-0842
+url: [[opportunity_url]]
+
+gates:
+  eligibility: PASS
+  set_aside: PASS
+  geography: PASS
+  timing: PASS
+  unknowns: none
+
+facets:
+  domain:
+    score: 0.88
+    reason: Solicitation topic is AI-driven network threat detection — core domain match.
+  mechanism:
+    score: 0.70
+    reason: Non-dilutive R&D capital; aligns with a mixed (capital + revenue) strategy.
+  award_size:
+    score: 1.00
+    reason: Award range $750K–$1.8M overlaps the $1M–$3M need.
+  precedent:
+    score: 0.60
+    reason: 2 similar AFWERX/DoD cyber SBIR awards on record for this program.
+
+swot:
+  strengths:
+    - U.S. small business — eligible
+    - Solicitation topic is AI-driven threat detection (core domain match)
+    - Contains active R&D scope
+  weaknesses:
+    - Requires a technical volume
+    - Requires prior feasibility work
+    - Decision timeline 3–6 months
+  opportunities:
+    - Phase II positions for a Phase III sole-source contract (government revenue)
+  threats:
+    - Popular topic; dual-use angle must be emphasized
+
+alignment:
+  - label: U.S.-based small business
+    status: yes
+  - label: AI technology
+    status: yes
+  - label: Cybersecurity application
+    status: yes
+  - label: Active R&D
+    status: yes
+  - label: Need band ($1M–$3M) fits award band
+    status: yes
+
+requirement_gap: []            # nothing unconfirmed — this is why it's Strong, not capped
+
+next_steps:
+  - class: registration
+    action: Confirm an active SAM.gov entity registration (UEI)
+  - class: read
+    action: "Read the full solicitation: [[opportunity_url]]"
+  - class: read
+    action: "Note the deadline: Oct 1, 2026"
+  - class: prepare
+    action: Draft the technical volume against topic requirements
+
+cta: Begin Application

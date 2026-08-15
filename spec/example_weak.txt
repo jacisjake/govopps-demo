@@ -1,0 +1,90 @@
+# GovOpps — example record: WEAK match (data only; registry voices it)
+# Conforms to scoring_schema.md v0.3 §11.
+# Teaching points, both new in v0.3:
+#   1. timing.status = rolling  -> PASS (v0.2 wrongly capped rolling at Maybe)
+#   2. cost_share is a requirement-gap item (DOE TCF ~50% match), not a footnote
+# Relevance is genuinely low (0.29) -> Orange regardless of unknowns (cap never promotes).
+
+tier: Weak
+relevance: 0.288
+# match_pct suppressed on Weak cards (§4) — a precise number would overstate a hedge
+
+mechanism: capital
+
+agency: Department of Energy — Technology Commercialization Fund
+award_name: Early-Stage Dual-Use Innovation (general)
+amount_min: 100000
+amount_max: 500000
+
+timing:
+  status: rolling             # <-- PASS, and good news: no deadline pressure
+  close_date: null
+  days_remaining: null
+
+cost_share_pct: 50            # DOE TCF is a ~1:1 match program
+match_obligation: 50000       # award_min * pct/100 = 100000 * 0.50 (smallest version, §2.1)
+
+retrieved_at: 2026-08-14
+
+source: Grants.gov
+source_id: DE-FOA-TCF-2026
+url: [[opportunity_url]]
+
+gates:
+  eligibility: PASS
+  set_aside: PASS
+  geography: PASS
+  timing: PASS                # rolling
+  unknowns: present           # from the cost-share affordability gap below
+
+facets:
+  domain:
+    score: 0.15
+    reason: Low concept overlap — dual-use, not cyber-specific; adjacent, not core.
+  mechanism:
+    score: 0.70
+    reason: Non-dilutive capital; aligns with a mixed funding strategy.
+  award_size:
+    score: 0.10
+    reason: Award $100K–$500K sits well below the $1M–$3M need.
+  precedent:
+    score: 0.40
+    reason: No historical-award signal supplied; neutral-low.
+
+swot:
+  strengths:
+    - Funds early-stage dual-use technology
+  weaknesses:
+    - Not cyber-specific; AI work is adjacent, not central
+    - Requires ~$50K in matching funds (affordability unconfirmed)
+  opportunities:
+    - Could seed a pilot off the main federal-cyber path
+  threats:
+    - Low domain overlap; relevance is a stretch
+
+requirement_gap:              # rendered as the interactive criteria checklist (§10)
+  cost_share:
+    item: ~$50K in matching funds (50% cost share)
+    status: affordability unknown — confirm capacity
+  ownership_and_team:
+    - Woman-owned (≥51%)
+    - Veteran- / service-disabled-veteran-owned (≥51%)
+    - 8(a) / socially & economically disadvantaged ownership
+    - Native American / Tribal-owned
+    - Founder or key staff holds a security clearance
+    - Principal investigator primarily employed by the company (SBIR)
+  company_credentials_and_location:
+    - HUBZone (principal office in a HUBZone)
+    - Rural location
+    - Relevant certification (e.g., CMMC, FedRAMP, AS9100, ISO)
+    - Prior federal contract or SBIR/STTR award (past performance)
+
+on_confirm: re-run set-aside / geography / cost-share gates; may promote match
+
+next_steps:
+  - class: gap-closing
+    action: Confirm whether you can commit ~$50K in matching funds
+  - class: read
+    action: Track for a better-fit sibling program
+
+cta: none

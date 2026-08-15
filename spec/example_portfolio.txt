@@ -1,0 +1,33 @@
+# GovOpps — example record: PORTFOLIO (one per result set; data only)
+# Conforms to scoring_schema.md v0.3 §11 "Portfolio record" + §6.
+# Illustrative set for a cyber founder (Case 04 shape): some strong, some capped, some suppressed.
+
+served_count: 4               # cards actually rendered (RED excluded)
+
+tier_counts:
+  green: 1
+  yellow: 2
+  orange: 1
+  red: 3                      # suppressed — counted internally, never shown
+
+revenue_options: 2
+capital_options: 2
+
+funding_in_reach:
+  value: 4300000             # top-3 served results by rank: 1.8M + 2.0M + 0.5M
+  label: top 3 combined
+  basis: sum of award_max across the top top_n_funding (3) served results (§6.1)
+  # NOT the sum of all served maxima — that old rule would have read $4.8M+ here and
+  # far more on a wide field. The headline describes a founder who applies to a few.
+
+agency_overflow:              # per-agency counts collapsed by agency_cap (2) (§6.2)
+  - agency: Department of the Air Force — AFWERX
+    served: 2
+    more: 3                  # "3 more from this agency" affordance; not discarded
+
+honest_no_match: false        # a GREEN exists -> no-match banner does NOT fire
+# When honest_no_match is true (no GREEN AND best relevance < 0.55), the registry heads
+# the results with the whole-portfolio message; surviving yellow/orange cards still render
+# beneath it (§6.2). Only if served_count == 0 does the message stand alone.
+
+message_source: rag_registry.md   # scoring supplies the trigger + surviving set; registry voices it
