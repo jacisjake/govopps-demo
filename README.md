@@ -1,29 +1,20 @@
-# GovOpps demo spec
+# GovOpps
 
 <p align="center">
   <a href="https://goed.ut.gitsum.rest/govopps"><strong>Open the GovOpps app →</strong></a><br>
   <sub>https://goed.ut.gitsum.rest/govopps</sub>
 </p>
 
-Public contract for **GovOpps** — a GOED / StartupState studio that translates a Utah startup into government language, maps federal and Utah opportunities, and opens a checklist toward a submission.
+A founder studio for Utah startups. Tell **McKenna** about the company. She translates that into government language, maps federal and Utah opportunities, and — if you accept a match — opens a checklist toward a real submission.
 
-Copilot persona: **McKenna**.
+Match is a door, not the win.
 
-This repository is the **rules**. The running product (API, scorer implementation, dashboard) lives in a private repo. If the two ever disagree, **this spec wins** for product behavior; `scoring_schema.md` is the sole scoring authority.
+## How it works
 
-## Start here
-
-- [spec/README.md](spec/README.md) — index
-- [spec/architecture.md](spec/architecture.md) — pipeline
-- [spec/harness.md](spec/harness.md) — facet ticket, compiler, eval
-- [spec/scoring_schema.md](spec/scoring_schema.md) — gates, tiers, record contract
-- [docs/harness-c.html](docs/harness-c.html) — illustrated harness note
-- [mock_startup/](mock_startup/) — five brief companies as scrape-able HTML
+- [Architecture](spec/architecture.md)
+- [Scoring](spec/scoring_schema.md) — gates, tiers, what gets shown
+- [Harness](spec/harness.md) — conversation → search facets
+- [Harness diagram](docs/harness-c.html)
+- [Demo companies](mock_startup/) — five brief cases McKenna is judged on
 
 Hackathon brief: [Government Opportunity Finder](https://startupstate-hackathon-brief.lovable.app/).
-
-Updates are published automatically when the private product repo changes `spec/`, `docs/`, or `mock_startup/`.
-
-## License
-
-Hackathon work. Not a production eligibility determination.
