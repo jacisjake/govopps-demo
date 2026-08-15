@@ -1,6 +1,6 @@
-# GovOpps specs
+# GovOpps — judging packet
 
-Canonical product is **GovOpps**. Copilot persona is **McKenna**.
+Written rules for the GOED / StartupState bounty. Persona: **McKenna**.
 
 
 | File | Authority for |
