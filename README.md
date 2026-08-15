@@ -1,5 +1,10 @@
 # GovOpps demo spec
 
+<p align="center">
+  <a href="https://goed.ut.gitsum.rest/govopps"><strong>Open the GovOpps app →</strong></a><br>
+  <sub>https://goed.ut.gitsum.rest/govopps</sub>
+</p>
+
 Public contract for **GovOpps** — a GOED / StartupState studio that translates a Utah startup into government language, maps federal and Utah opportunities, and opens a checklist toward a submission.
 
 Copilot persona: **McKenna**.
