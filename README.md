@@ -1,4 +1,4 @@
-# GovOpps spec
+# GovOpps demo spec
 
 Public contract for **GovOpps** — a GOED / StartupState studio that translates a Utah startup into government language, maps federal and Utah opportunities, and opens a checklist toward a submission.
 
