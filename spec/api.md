@@ -13,7 +13,8 @@ App factory: `create_app(db_path) -> FastAPI` (tests use a temp sqlite file).
 | POST | `/api/sessions/{id}/intake` | `{text?}`, `{url?}`, `{ticket?}` | session |
 | POST | `/api/sessions/{id}/turns` | `{answer?}`, `{ticket_patch?}` | session |
 | POST | `/api/sessions/{id}/score` | `{opportunities[], today?}` | `{freeze, portfolio, components}` |
-
+| POST | `/api/sessions/{id}/accept` | `{source_id}` | `{workspace}` |
+| POST | `/api/sessions/{id}/workspaces/{source_id}/items/{item_id}` | `{draft?}` / `{evidence?}` / `{deadline_status?}` | `{workspace}` |
 Unknown `id` → 404.
 
 ## Session
@@ -25,7 +26,7 @@ ticket          # working, mutated
 freeze          # null until first score; then immutable copy of ticket
 turns[]
 portfolio       # last rank_portfolio, or null
-```
+workspaces      # {source_id: workspace} after accept
 
 Intake stores raw text/url. If `ticket` is present, it is applied (passthrough — no LLM required). Turns append and may patch the working ticket. Score snapshots `ticket` → `freeze`, runs `score_pair` + `rank_portfolio`, persists portfolio.
 
@@ -42,7 +43,10 @@ Projection of the last portfolio. No voiced copy.
 
 Studio types (`studio.checklist`, `studio.narrative`, …) are added when Accept exists; see `studio.md`.
 
+## Studio
+
+`POST /accept` creates a workspace for one Strong or Maybe record. Weak/Poor → 409 `{detail: "tier cannot accept"}`. Missing opportunity or session → 404. Item writes set `draft`, append `evidence`, or set `deadline_status` in `{done, blocked, open}` without inventing `close_date`. GET session includes `workspaces`.
+
 ## Later (not v1 HTTP)
 
-`POST /api/sessions/{id}/accept` → workspace.  
 Mobile chat and embed reuse these resources; they do not get a second API.
