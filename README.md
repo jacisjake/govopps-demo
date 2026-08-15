@@ -44,3 +44,39 @@ Same companies as the brief. Mock sites: [`mock_startup/`](mock_startup/). Expec
 7. [Studio](spec/studio.md) · [API](spec/api.md) · [components](spec/components.md)
 
 `scoring_schema.md` wins if anything else disagrees about a tier.
+
+## Internal rubric score
+
+Self-score as of **2026-08-15**. **Now** = what a judge can actually run. **If spec ships** = the product this packet describes. We do not score the spec as if it were the demo.
+
+| Criterion | Wt | Now | If spec ships | Why this number |
+|---|---:|---:|---:|---|
+| Usefulness | 30 | 8 | 26 | Thesis (studio, no-match, map-first) is right. Live URL is a placeholder. No founder can finish a packet yet. |
+| Matching | 25 | 6 | 22 | `score_pair` exists and is tested. Retrieve (Grants.gov / SAM / SBIR) is not wired. The five cases cannot be walked end-to-end. |
+| Intelligence | 20 | 3 | 17 | History-on-every-card is specified, not attached. No similar-company block in the UI. |
+| UX | 15 | 4 | 13 | Placeholder is on-brand. Map, cards, McKenna interview are not served. |
+| Technical | 10 | 5 | 8 | Scorer + session API + tests + this packet. Missing the four-source ingest the brief asked everyone to share. |
+| **Total** | **100** | **26** | **86** | Gap is implementation, not an undecided product. |
+
+Update this table when a row’s *Now* changes. Do not raise *Now* for work that only exists in markdown.
+
+## Honesty — not production-ready
+
+| Surface | Status | What you will actually see |
+|---|---|---|
+| https://goed.ut.gitsum.rest/govopps | Placeholder page | “McKenna’s still setting the table.” Not the map. |
+| Opportunity Map | Spec + Vite stub, not deployed | Stub scores an empty opportunity list. |
+| Studio (checklist / narrative / evidence / deadline) | Spec only | No Accept path in production. |
+| Intake / McKenna (qwen via LiteLLM) | Spec only | API accepts a prebuilt ticket; no live interview. |
+| Grants.gov `search2` | Not ingested | — |
+| SAM listings + opportunities | Snapshot script only | Not queried by the app. |
+| SBIR.gov | Not ingested | — |
+| USAspending history block | Spec only | No “who else got this money” on a card. |
+| Utah table (`source: utah`) | Spec only | No Federal / Utah split on a live map. |
+| Harness eval (fixtures / `--live`) | Spec only | Five cases are documents, not a runner. |
+| Scorer v0.3 | Implemented, 22 tests | Not exposed through the public URL. |
+| Session API | Implemented, 11 tests | Private repo; not on the demo host. |
+| Live SAM submit | Out of scope (brief) | Will not ship. |
+| Mobile chat / `.gov` embed | Explicitly later | Not in this bounty slice. |
+
+If a row above says spec only, treat a polished paragraph as intent, not evidence.
