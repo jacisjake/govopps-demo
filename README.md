@@ -47,16 +47,18 @@ Same companies as the brief. Mock sites: [`mock_startup/`](mock_startup/). Expec
 
 ## Internal rubric score
 
-Self-score as of **2026-08-15**. **Now** = what a judge can actually run. **If spec ships** = the product this packet describes. We do not score the spec as if it were the demo.
+Self-score as of **2026-08-15**. **Now** = what a judge can actually run on https://goed.ut.gitsum.rest/govopps. **If spec ships** = the product this packet describes. We do not score the spec as if it were the demo.
+
+Walk the five cases with **Test group → Confirm & start searching**. That path uses recorded fixtures + the case proposal. A free-text pitch hits live transports and is thinner (Grants.gov only; SAM/SBIR/USAspending/Utah stay empty without a snapshot or proposal).
 
 | Criterion | Wt | Now | If spec ships | Why this number |
 |---|---:|---:|---:|---|
-| Usefulness | 30 | 8 | 26 | Thesis (studio, no-match, map-first) is right. Live URL is a placeholder. No founder can finish a packet yet. |
-| Matching | 25 | 6 | 22 | `score_pair` exists and is tested. Retrieve (Grants.gov / SAM / SBIR) is not wired. The five cases cannot be walked end-to-end. |
-| Intelligence | 20 | 3 | 17 | History-on-every-card is specified, not attached. No similar-company block in the UI. |
-| UX | 15 | 4 | 13 | Placeholder is on-brand. Map, cards, McKenna interview are not served. |
-| Technical | 10 | 5 | 8 | Scorer + session API + tests + this packet. Missing the four-source ingest the brief asked everyone to share. |
-| **Total** | **100** | **26** | **86** | Gap is implementation, not an undecided product. |
+| Usefulness | 30 | 18 | 26 | Live map-first SPA. Accept opens a studio shelf (narrative / evidence / deadline). Rallytime honesty fires on the Test-group walk. Packet tools are still thin. |
+| Matching | 25 | 15 | 22 | Scorer v0.3 + freeze + compiler. Test-group `/score` walks 01–05 (Cadence NIH Strong, Aquora cost-share Maybe, Cyberdriven 8(a) suppressed, Rallytime no-match). Live SAM is empty, so Ridgeline has no procurement. Free-text retrieve is Grants.gov only. |
+| Intelligence | 20 | 11 | 17 | History and cost-share gaps sit on the record and in the detail tray. Agency precedent is not surfaced as copy. Weak criteria are display-only (no promote). |
+| UX | 15 | 11 | 13 | Confirm + editable search package. CTA rules hold; Poor is never a card. McKenna after score is still hardcoded, not registry-voiced. |
+| Technical | 10 | 7 | 8 | Live API + SPA + `python3 code/eval.py` PASS 01–05. Utah is 8 themed rows. SAM needs `SAM_SNAPSHOT`. |
+| **Total** | **100** | **62** | **86** | Founder-pitch Now. Test-group walkthrough is closer to **67**. Do not score the packet as 86. |
 
 Update this table when a row’s *Now* changes. Do not raise *Now* for work that only exists in markdown.
 
@@ -64,18 +66,21 @@ Update this table when a row’s *Now* changes. Do not raise *Now* for work that
 
 | Surface | Status | What you will actually see |
 |---|---|---|
-| https://goed.ut.gitsum.rest/govopps | Placeholder page | “McKenna’s still setting the table.” SPA+API can run locally; public URL still placeholder. |
-| Studio (checklist / narrative / evidence / deadline) | Implemented locally | Accept + item writes exist in the API. Not on the public URL. |
-| Intake / McKenna (qwen via LiteLLM) | Optional live path | Default `/turns` is passthrough. `live: true` needs LiteLLM. |
-| Grants.gov `search2` | Transport stub + fixtures | Live HTTP only via `live_transport`. Tests never network. |
-| SAM listings + opportunities | Snapshot script + retrieve stub | Queried only if `SAM_SNAPSHOT` is set. |
-| SBIR.gov | Transport stub + fixtures | Same as Grants.gov. |
-| USAspending history block | Attached on retrieve | Present on scored records locally. Not on the public URL. |
-| Utah table (`source: utah`) | Seeded JSON (8 rows) | Theme-filtered on retrieve. |
-| Harness eval (fixtures / `--live`) | Implemented locally | `python3 code/eval.py` — five cases pass on fixtures. |
-| Scorer v0.3 | Implemented, tested | Not exposed through the public URL. |
-| Session API | Implemented, tested | Private repo; not on the demo host. |
+| https://goed.ut.gitsum.rest/govopps | Live SPA+API | “Let’s find some money.” Same process serves `/api/*` and the Vite SPA. |
+| Test group (01–05) | Implemented | Seeds the fixture ticket, opens Confirm, does **not** score until Confirm & start searching. |
+| Opportunity Map | Live | Header: served, top-3 funding, closing-in-90, Federal / Utah. Cards from `components[]`. |
+| Studio (checklist / narrative / evidence / deadline) | API + shelf UI | Accept Strong/Maybe. Item writes work. Deadline date lives on `timing.close_date`. |
+| Intake / McKenna (qwen via LiteLLM) | Optional live path | `/turns` `live: true`. Fail-soft patches CMS/TEFCA/EHR → HHS. Confirm fields are editable. |
+| Grants.gov `search2` | Live HTTP when `GOVOPPS_LIVE=1` | Free-text scores often return Grants.gov only. |
+| SAM listings + opportunities | Snapshot only | Empty unless `SAM_SNAPSHOT` is set on the host. |
+| SBIR.gov | Fixtures on Test group; live transport exists | Test group shows SBIR heroes. Free-text often returns 0. |
+| USAspending history block | On scored records + tray | Shown when retrieve attached history. Empty history is omitted, not faked. |
+| Utah table (`source: utah`) | 8 themed rows | Served only when `regional.themes` is non-empty. |
+| Harness eval (fixtures / `--live`) | Implemented | `python3 code/eval.py` — 01–05 pass on fixtures. |
+| Scorer v0.3 | Implemented, tested | Served through the public API. |
+| Session API | Implemented, tested | On the demo host. |
 | Live SAM submit | Out of scope (brief) | Will not ship. |
 | Mobile chat / `.gov` embed | Explicitly later | Not in this bounty slice. |
 
-If a row above says spec only, treat a polished paragraph as intent, not evidence.
+If a row says snapshot-only or free-text-empty, treat a polished paragraph as intent, not evidence.
+
