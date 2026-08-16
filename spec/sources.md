@@ -18,7 +18,7 @@ History block (USAspending and/or SBIR awards): similar recipients, amounts, yea
 
 Hand-normalized table, ~50–150 rows: GOED / state finance / university tech-transfer / municipal pilots / state SBIR match. **No scrape.**
 
-Every Utah row carries `source: utah`. The map header splits Federal / Utah.
+Every Utah row carries `source: utah`. The map header splits Federal / Utah. Retrieve only loads Utah rows when `search_plan.regional.themes` is non-empty.
 
 ## Normalization
 

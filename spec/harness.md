@@ -15,7 +15,7 @@ ticket
 ```
 
 Provenance: `stated` | `inferred` | `unknown`.
-Gate attributes: `held` | `not_held` | `unknown`. Silence is never `not_held`.
+Gate attributes: `held` | `confirmed-held` | `not_held` | `skipped` | `unknown`. Silence is never `not_held`. `skip` / `blank` / `idk` on an open certs slot records `skipped` and stops re-asking.
 
 ## Working ticket vs freeze
 
@@ -25,8 +25,7 @@ Gate attributes: `held` | `not_held` | `unknown`. Silence is never `not_held`.
 - Turns are not individually versioned.
 
 ## Compiler (hybrid)
-
-qwen may **propose** `query` expansions and a `search_plan`. A rules compiler **accepts or rewrites** before any HTTP call.
+qwen may **propose** `query` expansions and a `search_plan`. A rules compiler **accepts or rewrites** before any HTTP call. The compiler does not currently refuse a plan that collapses the retrieved set — it compiles what it can and retrieve returns what it finds.
 
 | Source | Who writes the plan |
 |---|---|
@@ -34,11 +33,11 @@ qwen may **propose** `query` expansions and a `search_plan`. A rules compiler **
 | SBIR.gov | Rules only (agency, phase, keywords from query) |
 | Grants.gov search2 | qwen proposes cats/elig/keywords; compiler drops unknown keys |
 | USAspending | Rules from NAICS / keywords / award type |
-| Utah table | qwen proposes themes; compiler matches known theme enum |
+| Utah table | qwen proposes themes; compiler matches known theme enum. No themes → no Utah rows. |
 
 Forbidden in any plan: URLs, tiers, eligibility assertions, invented recipient names.
 
-If a proposed relevance facet would collapse the retrieved set, the compiler does not apply it silently — it surfaces a tradeoff turn.
+After the first score, later model turns also receive a **hunt digest**: `served_count`, `honest_no_match`, and the top five non-Poor cards (`agency`, `award_name`, `tier`).
 
 ## Model may / may not
 
@@ -46,8 +45,10 @@ If a proposed relevance facet would collapse the retrieved set, the compiler doe
 |---|---|
 | Extract profile from evidence | Call source APIs |
 | Propose query + search_plan | Emit a tier or match % |
-| Ask one question that changes the ticket | Infer set-aside / clearance from a name |
+| Ask one open question that changes the ticket | Infer set-aside / clearance from a name |
 | Voice McKenna copy **after** scoring, from the record | Invent a URL or a recipient |
+
+The system prompt is a short operating brief, not the full intake spec. `next_question` from the model is preferred; it is dropped only if it is an exact repeat, re-asks a recorded/skipped 8(a)/SDVOSB, or re-asks location after `profile.state` is set. Empty / unparseable model output falls back to a slot question.
 
 ## Eval
 

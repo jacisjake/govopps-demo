@@ -45,16 +45,15 @@ founder input (URL / deck / pitch / chat)
 The model never searches, never assigns a tier, never invents a URL. Scoring is off-model.
 
 ## Runtime shape (v1)
-
 One process: FastAPI serves `/api/*` and the built Vite SPA. Caddy on `goed.ut.gitsum.rest` reverse-proxies `/govopps` (`root_path=/govopps`).
 
 | Port / host | Role |
 |---|---|
-| this process | API + dashboard |
-| `127.0.0.1:14100` LiteLLM | `qwen2.5-14b` — intake, interview, McKenna copy, Grants.gov/Utah plan propose |
+| this process (`127.0.0.1:8787`) | API + dashboard |
+| `https://ai.gitsum.rest/v1` LiteLLM | `qwen2.5-14b` — intake, interview, McKenna copy, Grants.gov/Utah plan propose |
 | sqlite | sessions, freeze snapshots, Utah table, optional SAM/SBIR caches |
 
-LLM is optional at the HTTP boundary: intake may accept a prebuilt `ticket` patch so eval and tests do not call qwen.
+LLM is optional at the HTTP boundary: a prebuilt `ticket` / `profile` / `query` patch skips qwen so eval and tests do not call it. Free-text intake and `live: true` turns call it and fail-soft to rules.
 
 ## Information architecture
 
@@ -75,5 +74,9 @@ LLM is optional at the HTTP boundary: intake may accept a prebuilt `ticket` patc
 | Piece | State |
 |---|---|
 | Scoring v0.3 | Implemented (`code/scoring.py`) |
-| API + sessions | In progress |
-| Harness / retrieve / dashboard / studio / deploy | Specified, not built |
+| API + sessions | Implemented (`code/api.py`) |
+| Retrieve | Implemented; live Grants.gov / SBIR / USAspending when `GOVOPPS_LIVE=1`; SAM if `SAM_SNAPSHOT` |
+| Interview / McKenna | Implemented (`code/llm.py`, `code/interview.py`). Hunt after every utterance. |
+| Dashboard | Live SPA (`web/`) |
+| Studio | Live Accept + item writes |
+| Deploy | Live at `goed.ut.gitsum.rest/govopps` |

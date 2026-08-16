@@ -8,16 +8,15 @@ Voiced McKenna strings, when present, are **props** produced after scoring from 
 
 | type | When | Props (min) |
 |---|---|---|
-| `portfolio_header` | always after score | served_count, funding_in_reach, honest_no_match, agencies, closing_90, federal_count, utah_count |
-| `card.strong` | served Strong | score record + optional opener |
-| `card.maybe` | served Maybe | record + missing_block |
-| `card.weak` | served Weak | record + criteria_checklist |
-| `no_match` | honest_no_match | message keys; surviving cards still listed |
+| `portfolio_header` | always after score | served_count, funding_in_reach, honest_no_match, agency_counts, closing_90, federal_count, utah_count |
+| `card.strong` | served Strong | score record + voice_record (opener, swot) |
+| `card.maybe` | served Maybe | record + missing_block / voice |
+| `card.weak` | served Weak | record + criteria_checklist / hedge_copy |
+| `no_match` | honest_no_match | no_match_message; surviving Weak cards still listed |
 | `studio.checklist` | accepted workspace | items[] |
 | `studio.narrative` | shelf | item_id, draft |
 | `studio.evidence` | shelf | item_id, facts[] |
 | `studio.deadline` | shelf | close_date, days_remaining, status |
-
 Unknown `type` → skip, do not crash. Do not guess a card.
 
 ## Rules carried from the registry
