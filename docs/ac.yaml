@@ -1,0 +1,219 @@
+# Machine-readable acceptance-criteria registry (issue #2).
+# Schema: {id, phase, text, falsified_when, test, mutant, workstream, status, jev}
+# status: ready   -> test + mutant ship now; all three arms gate `jev_ci run`.
+#         example -> deliberately weak AC-1.2 placeholder, shipped to prove the
+#                    coverage arm flags it; reported but never gates the exit code.
+#         pending -> test/mutant belong to a future workstream; skipped gracefully.
+# The 18 rows AC-1.1..AC-4.2 are seeded verbatim from
+# docs/digital-twin-implementation-plan.md §"Falsifiable acceptance";
+# AC-11.1..AC-11.4 come from issue #2. The registry, not the code, is the contract.
+
+- id: AC-1.1
+  phase: 1
+  text: "Only legal claim state transitions occur (no silent verified->attested, no auto-cleared contradicted)"
+  falsified_when: "any path writes an illegal state transition (e.g. verified->attested silently, contradicted auto-cleared)"
+  test: "code.tests.test_twin::TestStateTransitions"
+  mutant: "code/tests/mutants/AC-1.1.patch"
+  workstream: "#3"
+  status: pending
+  jev: true
+
+- id: AC-1.2
+  phase: 1
+  text: "Silence is never denial: an unanswered question leaves a claim missing, never not_held"
+  falsified_when: "twin contains a credential `not_held` after an unanswered turn"
+  test: "code.tests.test_jev_ci::TestAC12WeakExample"
+  mutant: "code/tests/mutants/AC-1.2.patch"
+  workstream: "#2 (example; #3 replaces with the real intake-eval replay)"
+  status: example
+  jev: true
+
+- id: AC-1.3
+  phase: 1
+  text: "Two runs on the same twin version + corpus produce identical gate verdicts (frozen-replay determinism)"
+  falsified_when: "two runs on same twin version + corpus produce different gate verdicts"
+  test: "code.tests.test_twin::TestDeterministicReplay"
+  mutant: "code/tests/mutants/AC-1.3.patch"
+  workstream: "#3"
+  status: pending
+  jev: true
+
+- id: AC-1.4
+  phase: 1
+  text: "search_ready() is True only when every required sufficiency-gate item is met"
+  falsified_when: "`search_ready()` True with any required item unmet"
+  test: "code.tests.test_twin::TestSearchReady"
+  mutant: "code/tests/mutants/AC-1.4.patch"
+  workstream: "#3"
+  status: pending
+  jev: true
+
+- id: AC-2.1
+  phase: 2
+  text: "Every derived claim value is present in the vocab index (no_match is never stored as a value)"
+  falsified_when: "any derived claim value not present in the vocab index"
+  test: "code.tests.test_derive::TestVocabMembership"
+  mutant: "code/tests/mutants/AC-2.1.patch"
+  workstream: "#4"
+  status: pending
+  jev: true
+
+- id: AC-2.2
+  phase: 2
+  text: "Taxonomy values derived by the deleted v0.3 rules are a subset of twin-derived claims"
+  falsified_when: "a taxonomy value derived by deleted v0.3 rules is absent from twin claims"
+  test: "code.tests.test_derive::TestRuleOutputSubset"
+  mutant: "code/tests/mutants/AC-2.2.patch"
+  workstream: "#4"
+  status: pending
+  jev: true
+
+- id: AC-2.3
+  phase: 2
+  text: "At least 80% of 10 labeled ambiguous utterances land in review, not confirmed"
+  falsified_when: "<80% of 10 labeled ambiguous utterances land in review, not confirmed"
+  test: "code.tests.test_derive::TestAmbiguityReview"
+  mutant: "code/tests/mutants/AC-2.3.patch"
+  workstream: "#4"
+  status: pending
+  jev: true
+
+- id: AC-2.4
+  phase: 2
+  text: "Changing the embedder leaves existing claims queryably stale, not indistinguishable from fresh ones"
+  falsified_when: "changing embedder leaves claims indistinguishable from fresh ones"
+  test: "code.tests.test_derive::TestEmbedderStaleness"
+  mutant: "code/tests/mutants/AC-2.4.patch"
+  workstream: "#4"
+  status: pending
+  jev: true
+
+- id: AC-3.1
+  phase: 3
+  text: "Fixture 06-contract-no-anchor serves no contract card at Strong/Maybe"
+  falsified_when: "fixture `06-contract-no-anchor` serves any contract card at Strong/Maybe"
+  test: "code.tests.test_gates::TestContractAnchorTier"
+  mutant: "code/tests/mutants/AC-3.1.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.2
+  phase: 3
+  text: "Fixture 07-sbir-junior never suppresses a capital opportunity for missing anchors"
+  falsified_when: "fixture `07-sbir-junior` suppresses any capital opportunity for missing anchors"
+  test: "code.tests.test_gates::TestSbirJuniorCapital"
+  mutant: "code/tests/mutants/AC-3.2.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.3
+  phase: 3
+  text: "A registry-only IP claim (synthetic USPTO handle, zero content) passes the anchor rule"
+  falsified_when: "registry-only IP claim (synthetic USPTO handle, zero content) fails the anchor rule"
+  test: "code.tests.test_gates::TestRegistryIpAnchor"
+  mutant: "code/tests/mutants/AC-3.3.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.4
+  phase: 3
+  text: "No served Strong/Maybe card carries a contradicted claim on its required items"
+  falsified_when: "any Strong/Maybe card has a contradicted claim on its required items"
+  test: "code.tests.test_gates::TestContradictedSlate"
+  mutant: "code/tests/mutants/AC-3.4.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.5
+  phase: 3
+  text: "Every suppressed card has a machine-readable reason {gate, claim, repair}"
+  falsified_when: "any suppressed card lacks a machine-readable reason"
+  test: "code.tests.test_gates::TestSuppressionReasons"
+  mutant: "code/tests/mutants/AC-3.5.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.6
+  phase: 3
+  text: "On the post-W6 golden set (>=60 pairs) rule precision minus blended precision is >= 0"
+  falsified_when: "post-W6 golden set (≥60 pairs) rule precision − blended precision < 0"
+  test: "code.tests.test_gates::TestBlendedPrecision"
+  mutant: "code/tests/mutants/AC-3.6.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-3.7
+  phase: 3
+  text: "At least 90% of 10 seeded inflation pairs (vague-over-thin) are judged contradicted at p>=0.6"
+  falsified_when: "<90% of 10 seeded inflation pairs (vague-over-thin) judged contradicted at p≥0.6"
+  test: "code.tests.test_gates::TestInflationDetection"
+  mutant: "code/tests/mutants/AC-3.7.patch"
+  workstream: "#5"
+  status: pending
+  jev: true
+
+- id: AC-4.1
+  phase: 4
+  text: "Every gate denial payload carries a non-empty repair action"
+  falsified_when: "any gate denial payload has empty/null repair action"
+  test: "code.tests.test_ui::TestRepairPayloads"
+  mutant: "code/tests/mutants/AC-4.1.patch"
+  workstream: "#6"
+  status: pending
+  jev: true
+
+- id: AC-4.2
+  phase: 4
+  text: "Ledger counts always equal claim-table counts"
+  falsified_when: "ledger counts ≠ claim-table counts"
+  test: "code.tests.test_ui::TestLedgerCounts"
+  mutant: "code/tests/mutants/AC-4.2.patch"
+  workstream: "#6"
+  status: pending
+  jev: true
+
+- id: AC-11.1
+  phase: 1
+  text: "jev_ci run exits non-zero when a mutant is removed or neutralized"
+  falsified_when: "run --phase 1 exits 0 while a mutant is missing or an empty patch was swapped in"
+  test: "code.tests.test_jev_ci::TestMutationArm"
+  mutant: "code/tests/mutants/AC-11.1.patch"
+  workstream: "#2"
+  status: ready
+  jev: true
+
+- id: AC-11.2
+  phase: 1
+  text: "Low-confidence Jev answers never produce a pass tick"
+  falsified_when: "any band logic maps conf<0.6 -> covered"
+  test: "code.tests.test_jev_ci::TestCoverageBands"
+  mutant: "code/tests/mutants/AC-11.2.patch"
+  workstream: "#2"
+  status: ready
+  jev: true
+
+- id: AC-11.3
+  phase: 1
+  text: "Offline mode requires no network and no TYPESAFE_API_KEY"
+  falsified_when: "any offline-mode code path attempts a live call or requires TYPESAFE_API_KEY"
+  test: "code.tests.test_jev_ci::TestOfflineMode"
+  mutant: "code/tests/mutants/AC-11.3.patch"
+  workstream: "#2"
+  status: ready
+  jev: true
+
+- id: AC-11.4
+  phase: 1
+  text: "docs/ac.yaml parses and contains exactly the 18 plan AC ids"
+  falsified_when: "docs/ac.yaml fails to parse or is missing/adding plan AC ids"
+  test: "code.tests.test_jev_ci::TestRegistryContract"
+  mutant: "code/tests/mutants/AC-11.4.patch"
+  workstream: "#2"
+  status: ready
+  jev: true
