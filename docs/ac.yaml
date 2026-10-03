@@ -182,50 +182,50 @@
   phase: 3
   text: "Fixture 06-contract-no-anchor serves no contract card at Strong/Maybe"
   falsified_when: "fixture `06-contract-no-anchor` serves any contract card at Strong/Maybe"
-  test: "code.tests.test_gates::TestContractAnchorTier"
+  test: "code.tests.test_twin_gate::TestContractAnchorTier"
   mutant: "code/tests/mutants/AC-3.1.patch"
   workstream: "#5"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.2
   phase: 3
   text: "Fixture 07-sbir-junior never suppresses a capital opportunity for missing anchors"
   falsified_when: "fixture `07-sbir-junior` suppresses any capital opportunity for missing anchors"
-  test: "code.tests.test_gates::TestSbirJuniorCapital"
+  test: "code.tests.test_twin_gate::TestSbirJuniorCapital"
   mutant: "code/tests/mutants/AC-3.2.patch"
   workstream: "#5"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.3
   phase: 3
   text: "A registry-only IP claim (synthetic USPTO handle, zero content) passes the anchor rule"
   falsified_when: "registry-only IP claim (synthetic USPTO handle, zero content) fails the anchor rule"
-  test: "code.tests.test_gates::TestRegistryIpAnchor"
+  test: "code.tests.test_twin_gate::TestRegistryIpAnchor"
   mutant: "code/tests/mutants/AC-3.3.patch"
   workstream: "#5"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.4
   phase: 3
   text: "No served Strong/Maybe card carries a contradicted claim on its required items"
   falsified_when: "any Strong/Maybe card has a contradicted claim on its required items"
-  test: "code.tests.test_gates::TestContradictedSlate"
+  test: "code.tests.test_twin_gate::TestContradictedSlate"
   mutant: "code/tests/mutants/AC-3.4.patch"
   workstream: "#5"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.5
   phase: 3
   text: "Every suppressed card has a machine-readable reason {gate, claim, repair}"
   falsified_when: "any suppressed card lacks a machine-readable reason"
-  test: "code.tests.test_gates::TestSuppressionReasons"
+  test: "code.tests.test_twin_gate::TestSuppressionReasons"
   mutant: "code/tests/mutants/AC-3.5.patch"
   workstream: "#5"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.6
