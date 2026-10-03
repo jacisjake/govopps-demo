@@ -1,8 +1,8 @@
 # Machine-readable acceptance-criteria registry (issue #2).
 # Schema: {id, phase, text, falsified_when, test, mutant, workstream, status, jev}
 # status: ready   -> test + mutant ship now; all three arms gate `jev_ci run`.
-#         example -> deliberately weak AC-1.2 placeholder, shipped to prove the
-#                    coverage arm flags it; reported but never gates the exit code.
+#         example -> weak placeholder wiring (retired by #3: AC-1.2 now ships
+#                    the real intake-eval replay; no example rows remain).
 #         pending -> test/mutant belong to a future workstream; skipped gracefully.
 # The 18 rows AC-1.1..AC-4.2 are seeded verbatim from
 # docs/digital-twin-implementation-plan.md §"Falsifiable acceptance";
@@ -15,17 +15,17 @@
   test: "code.tests.test_twin::TestStateTransitions"
   mutant: "code/tests/mutants/AC-1.1.patch"
   workstream: "#3"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-1.2
   phase: 1
   text: "Silence is never denial: an unanswered question leaves a claim missing, never not_held"
   falsified_when: "twin contains a credential `not_held` after an unanswered turn"
-  test: "code.tests.test_jev_ci::TestAC12WeakExample"
+  test: "code.tests.test_twin::TestSilenceNotDenial"
   mutant: "code/tests/mutants/AC-1.2.patch"
-  workstream: "#2 (example; #3 replaces with the real intake-eval replay)"
-  status: example
+  workstream: "#3"
+  status: ready
   jev: true
 
 - id: AC-1.3
@@ -35,7 +35,7 @@
   test: "code.tests.test_twin::TestDeterministicReplay"
   mutant: "code/tests/mutants/AC-1.3.patch"
   workstream: "#3"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-1.4
@@ -44,7 +44,7 @@
   falsified_when: "`search_ready()` True with any required item unmet"
   test: "code.tests.test_twin::TestSearchReady"
   mutant: "code/tests/mutants/AC-1.4.patch"
-  workstream: "#3"
+  workstream: "#6"
   status: pending
   jev: true
 
