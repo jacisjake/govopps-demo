@@ -45,7 +45,37 @@
   test: "code.tests.test_twin::TestSearchReady"
   mutant: "code/tests/mutants/AC-1.4.patch"
   workstream: "#6"
-  status: pending
+  status: ready
+  jev: true
+
+- id: AC-5.1
+  phase: 1
+  text: "Every unmet sufficiency item carries a non-empty machine-readable repair action"
+  falsified_when: "any unmet item in a sufficiency payload has an empty or null repair"
+  test: "code.tests.test_twin::TestSearchReady"
+  mutant: "code/tests/mutants/AC-5.1.patch"
+  workstream: "#6"
+  status: ready
+  jev: true
+
+- id: AC-5.2
+  phase: 1
+  text: "Attested taxonomy values never close the taxonomy item; only derived_confirmed/verified do"
+  falsified_when: "search_ready() True on a twin whose only taxonomy closure is attested"
+  test: "code.tests.test_twin::TestSearchReady"
+  mutant: "code/tests/mutants/AC-5.2.patch"
+  workstream: "#6"
+  status: ready
+  jev: true
+
+- id: AC-5.3
+  phase: 1
+  text: "Hunt/score on a not-ready twin session returns 409 with {ready:false, items:[...]}"
+  falsified_when: "a not-ready twin session's score request does not 409 with the full items payload"
+  test: "code.tests.test_gates::TestScore409Payload"
+  mutant: "code/tests/mutants/AC-5.3.patch"
+  workstream: "#6"
+  status: ready
   jev: true
 
 - id: AC-2.1
@@ -86,6 +116,36 @@
   mutant: "code/tests/mutants/AC-2.4.patch"
   workstream: "#4"
   status: pending
+  jev: true
+
+- id: AC-2.1a
+  phase: 2
+  text: "Every vocab entry passes schema validation (4 fields, >=2 examples); build fails on missing definition"
+  falsified_when: "build succeeds with an entry missing a required field or fewer than 2 examples"
+  test: "code.tests.test_vocab_index::TestSchemaValidation"
+  mutant: "code/tests/mutants/AC-2.1a.patch"
+  workstream: "#5"
+  status: ready
+  jev: true
+
+- id: AC-2.2a
+  phase: 2
+  text: "8 labeled probes return the expected id in top-5 retrieval"
+  falsified_when: "any probe's expected id is absent from its top-5"
+  test: "code.tests.test_vocab_index::TestRetrievalProbes"
+  mutant: "code/tests/mutants/AC-2.2a.patch"
+  workstream: "#5"
+  status: ready
+  jev: true
+
+- id: AC-2.4a
+  phase: 2
+  text: "index_hash changes on vocab-file or embedder change; build idempotent otherwise"
+  falsified_when: "stale rows survive a vocab edit with an unchanged hash, or a rerun changes rows"
+  test: "code.tests.test_vocab_index::TestIndexHashIdempotency"
+  mutant: "code/tests/mutants/AC-2.4a.patch"
+  workstream: "#5"
+  status: ready
   jev: true
 
 - id: AC-3.1
