@@ -108,6 +108,36 @@
   status: ready
   jev: true
 
+- id: AC-8.1
+  phase: 4
+  text: "Twin-fed portfolio_state yields the same slot plans as the ticket-adapter on all five fixtures (E1 equivalence preserved)"
+  falsified_when: "twin-fed and ticket-adapter plans differ on any fixture, or an E1 invariant fails"
+  test: "code.tests.test_assemble_twin::TestTicketEquivalence"
+  mutant: "code/tests/mutants/AC-8.1.patch"
+  workstream: "#10"
+  status: pending
+  jev: true
+
+- id: AC-8.2
+  phase: 4
+  text: "Gate-UNKNOWN contract cards enter the pool but never take BUILD-adjacent SELL priority; gate-FAIL cards are excluded with reason"
+  falsified_when: "an UNKNOWN card sorts ahead of a PASS card in SELL priority, or a FAIL card appears unflagged"
+  test: "code.tests.test_assemble_twin::TestGateAwarePools"
+  mutant: "code/tests/mutants/AC-8.2.patch"
+  workstream: "#10"
+  status: pending
+  jev: true
+
+- id: AC-8.3
+  phase: 4
+  text: "Not-ready (sufficiency) empty plan and honest-no-match empty plan carry distinct payloads"
+  falsified_when: "either payload shape matches the other, or an empty plan is indistinguishable in origin"
+  test: "code.tests.test_assemble_twin::TestEmptyPlanOrigins"
+  mutant: "code/tests/mutants/AC-8.3.patch"
+  workstream: "#10"
+  status: pending
+  jev: true
+
 - id: AC-2.1
   phase: 2
   text: "Every derived claim value is present in the vocab index (no_match is never stored as a value)"
