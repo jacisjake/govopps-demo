@@ -115,7 +115,7 @@
   test: "code.tests.test_assemble_twin::TestTicketEquivalence"
   mutant: "code/tests/mutants/AC-8.1.patch"
   workstream: "#10"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-8.2
@@ -125,7 +125,7 @@
   test: "code.tests.test_assemble_twin::TestGateAwarePools"
   mutant: "code/tests/mutants/AC-8.2.patch"
   workstream: "#10"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-8.3
@@ -135,7 +135,7 @@
   test: "code.tests.test_assemble_twin::TestEmptyPlanOrigins"
   mutant: "code/tests/mutants/AC-8.3.patch"
   workstream: "#10"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-2.1
