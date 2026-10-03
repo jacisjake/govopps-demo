@@ -260,12 +260,12 @@
 
 - id: AC-3.6
   phase: 3
-  text: "On the post-W6 golden set (>=60 pairs) rule precision minus blended precision is >= 0"
-  falsified_when: "post-W6 golden set (≥60 pairs) rule precision − blended precision < 0"
+  text: "On the post-W6 golden set (>=60 pairs) blended (rule+Jev) precision is >= rule precision, and every judged pair's cached Jev prob is keyed to the current rich pair state (title-only state is the falsified form)"
+  falsified_when: "post-W6 golden set (≥60 pairs) blended precision < rule precision, or any judged pair's pair-state hash does not match its recorded rich-state prob (mutant: revert pair_state to title-only -> loud hash mismatch)"
   test: "code.tests.test_gates::TestBlendedPrecision"
   mutant: "code/tests/mutants/AC-3.6.patch"
-  workstream: "#5"
-  status: pending
+  workstream: "#12"
+  status: ready
   jev: true
 
 - id: AC-3.7
@@ -357,3 +357,44 @@
   workstream: "#2"
   status: ready
   jev: true
+
+- id: AC-10.1
+  phase: 4
+  text: "E6 executes the twin-gate decision table as an assertion per spec cell (intent x anchor state x disclosure x evidence shape), incl. capital-needs-no-anchor and registry-satisfies-revenue"
+  falsified_when: "any truth-table cell can flip without a code change being detected (mutant: relax the anchor rule to attested -> cell flips undetected is the failure)"
+  test: "code.tests.test_experiments::TestGateTruthTable"
+  mutant: "code/tests/mutants/AC-10.1.patch"
+  workstream: "#12"
+  status: ready
+  jev: true
+
+- id: AC-10.2
+  phase: 4
+  text: "Golden pair set >=60 with >=40% negatives and both E2 trap classes represented >=8 each, schema-validated, grant sides traced to W6-reclassified corpus rows"
+  falsified_when: "the set drops below 60 pairs or 40% negatives, a trap class falls below 8, a pair lacks a label_note, or a grant corpus reference loses its reclassified_at provenance"
+  test: "code.tests.test_experiments::TestGoldenPairSet"
+  mutant: "code/tests/mutants/AC-10.2.patch"
+  workstream: "#12"
+  status: ready
+  jev: true
+
+- id: AC-10.3
+  phase: 4
+  text: "Experiment arms are offline-first: cached arms replay with env scrubbed and no network; --live diff-vs-cached is reported as agreement % and never blocks; results stamp model id + index_hash + vocab hash"
+  falsified_when: "an offline replay path attempts a network call or requires TYPESAFE_API_KEY, or a --live diff blocks (mutant: make the E5 replay demand the live key)"
+  test: "code.tests.test_experiments::TestOfflineReplay"
+  mutant: "code/tests/mutants/AC-10.3.patch"
+  workstream: "#12"
+  status: ready
+  jev: true
+
+- id: AC-10.4
+  phase: 4
+  text: "Cost ledger {calls, input_tokens, output_tokens, cents, p50_ms, p95_ms} recorded on every arm E1-E6 plus the W6 reclassification total in results/experiments.json"
+  falsified_when: "any results block lacks the usage ledger (mutant: drop the usage block in one arm)"
+  test: "code.tests.test_experiments::TestCostLedger"
+  mutant: "code/tests/mutants/AC-10.4.patch"
+  workstream: "#12"
+  status: ready
+  jev: true
+

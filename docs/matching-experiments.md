@@ -78,8 +78,57 @@ gray zone. This is mislabeling born of thin state at classification time.
 
 ```
 python3 -m unittest code.tests.test_assemble        # slot invariants
-python3 code/eval.py                                 # five cases, unregressed
-python3 -m code.experiments.run_experiments          # E1-E4 offline
+python3 code/eval.py                                 # standing cases, unregressed
+python3 -m code.experiments.run_experiments          # E1-E6 offline
 python3 -m code.experiments.run_experiments --live   # + Jev arms (TYPESAFE_API_KEY)
+python3 -m code.claim_audit                          # citation-layer audit (offline replay)
 python3 -m code.jev_match rerank 02-ridgeline        # per-case rule-vs-Jev plans
 ```
+
+## W9 hardening — issue #12 (2026-10-03)
+
+Eval apparatus for the twin pipeline. Everything fixture-cached-first; `--live`
+optional and non-blocking.
+
+- **Standing fixtures**: `06-contract-no-anchor`, `07-sbir-junior`,
+  `08-registry-anchor` promoted from the #9 scenarios into `code/eval_fixtures/`
+  with `twin` + gate `expect` blocks (eval_lib is twin-aware). `python3
+  code/eval.py` runs 8 cases; 09 stays scenario-only.
+- **Golden pair set** (`code/experiments/golden_pairs.json`): 60 pairs —
+  25 pos / 25 neg (41.7%) / 10 gray, 10 NAICS-coincidence + 10 same-agency
+  traps (≥8 each per AC-10.2), 46 grant sides traced to W6-reclassified corpus
+  rows (title/agency/themes/capital cross-checked by test), `label_note` per pair.
+- **E5 intake-derivation** (offline replay of issue #7's recorded answers):
+  derivation precision 1.00 (31 confirmed, 0 leaks), review-band capture
+  39/39 answers & 10/10 ambiguous events, 0 review-band leaks into confirmed.
+  no_match rates per field: theme 0.61, agency 0.24, naics 0.21,
+  cert/entity/intent/small_business 0.0; over-fire proxy (label∩utterance ≥2
+  tokens on a no_match answer): 1 (naics) — vocab index is healthy.
+- **E6 gate truth table**: 168 cells = {intent × anchor state × disclosure ×
+  evidence shape} × spec rows, all matching `twin_gate` (AC-10.1), incl.
+  capital-needs-no-anchor, registry-satisfies-revenue, attested→UNKNOWN,
+  contradicted→UNKNOWN-never-denied, working-level-not-an-anchor.
+- **claim_audit** (`code/claim_audit.py`, deliverable 5): recorded citation
+  probs replayed per fixture entry; per-kind judgment-vs-label confusion.
+  Traps verified 0/10, silents 0/10, supports 9/10; replay agrees with the
+  recorded live verdicts on 30/30 rows (100%).
+- **Blended pairing on the golden set (AC-3.6)**: rule precision 0.714
+  (10 FP = exactly the trap classes), Jev-with-W6-state precision 1.0 /
+  recall 0.84, blended (rule gate + Jev 0.6 blend @ ≥0.4) precision 1.0 /
+  recall 1.0. **The lever worked**: richer pair state flipped Jev from the
+  E2 confabulator into a trap-killer; plan-matrix wording signed the check as
+  `rule − blended ≥ 0` (written pre-data, expecting no improvement) — landed
+  as `blended ≥ rule` + pair-state hash coverage pins, see the AC-3.6 row in
+  docs/ac.yaml. Title-only state fails loudly (state-hash mismatch).
+- **Cost ledger (AC-10.4, `{calls, input_tokens, output_tokens, cents, p50_ms,
+  p95_ms}` on every arm)**: golden capture 5 calls / 12,973 in / 785 out
+  tokens = $0.000545, p50 111.6ms / p95 131.9ms; E5/E6 replay arms 0 calls.
+  W6 reclassification: 204 calls / 1,345,311 in + 465,826 out tokens
+  = **$0.0565 total** at the $0.042/MTok input rate (output free).
+- **Version stamping (deliverable 7)**: every arm block + the probs cache
+  carries {jev_model, embed_model, index_hash, vocab_hash}; cache keys fold
+  all three — a model/vocab/index bump marks the cache stale and the arms
+  are re-recorded wholesale with `--live` (test pins this, AC-10.3).
+- **jev_ci**: AC-10.1..10.4 + AC-3.6 flipped ready (phase 3/4, workstream
+  #12), mutants seeded: relaxed anchor rule, trap-class deflation,
+  key-requiring replay, dropped ledger, title-only pair state — all CAUGHT.
