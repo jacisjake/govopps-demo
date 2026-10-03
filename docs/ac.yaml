@@ -282,20 +282,40 @@
   phase: 4
   text: "Every gate denial payload carries a non-empty repair action"
   falsified_when: "any gate denial payload has empty/null repair action"
-  test: "code.tests.test_ui::TestRepairPayloads"
+  test: "code.tests.test_api_twin::TestRepairPayloads"
   mutant: "code/tests/mutants/AC-4.1.patch"
-  workstream: "#6"
-  status: pending
+  workstream: "#11"
+  status: ready
   jev: true
 
 - id: AC-4.2
   phase: 4
   text: "Ledger counts always equal claim-table counts"
   falsified_when: "ledger counts ≠ claim-table counts"
-  test: "code.tests.test_ui::TestLedgerCounts"
+  test: "code.tests.test_api_twin::TestLedgerCounts"
   mutant: "code/tests/mutants/AC-4.2.patch"
-  workstream: "#6"
-  status: pending
+  workstream: "#11"
+  status: ready
+  jev: true
+
+- id: AC-9.1
+  phase: 4
+  text: "A client PUT can never write verified — the server refuses state upgrades lacking evidence"
+  falsified_when: "any API response leaves a claim verified that the server did not itself verify from attached evidence"
+  test: "code.tests.test_api_twin_actions::TestClientCannotVerify"
+  mutant: "code/tests/mutants/AC-9.1.patch"
+  workstream: "#11"
+  status: ready
+  jev: true
+
+- id: AC-9.2
+  phase: 4
+  text: "Reject is the ONLY founder action that writes a negative state, and it records provenance.action"
+  falsified_when: "any founder action besides reject writes a contradicted/negative state, or reject writes one without provenance.action"
+  test: "code.tests.test_api_twin_actions::TestRejectOnlyNegative"
+  mutant: "code/tests/mutants/AC-9.2.patch"
+  workstream: "#11"
+  status: ready
   jev: true
 
 - id: AC-11.1
