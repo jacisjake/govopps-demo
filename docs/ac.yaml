@@ -78,6 +78,36 @@
   status: ready
   jev: true
 
+- id: AC-3.8
+  phase: 3
+  text: "Topical-adjacency spans never verify at HI=0.8 (10 supports / 10 traps / 10 silents fixture set)"
+  falsified_when: "more than 1 adjacency trap verifies at HI=0.8"
+  test: "code.tests.test_claim_eval::TestAdjacencyTraps"
+  mutant: "code/tests/mutants/AC-3.8.patch"
+  workstream: "#8"
+  status: pending
+  jev: true
+
+- id: AC-3.9
+  phase: 3
+  text: "Registry-handle IP claim verifies with disclosure=registry and zero doc evidence; malformed handles rejected"
+  falsified_when: "a malformed handle verifies, or a valid registry-only claim fails"
+  test: "code.tests.test_claim_eval::TestRegistryAnchors"
+  mutant: "code/tests/mutants/AC-3.9.patch"
+  workstream: "#8"
+  status: pending
+  jev: true
+
+- id: AC-3.10
+  phase: 3
+  text: "The veto layer can block verification but never writes negative states"
+  falsified_when: "any veto code path writes not-held/contradicted or clears a state"
+  test: "code.tests.test_claim_eval::TestVetoBlocksOnly"
+  mutant: "code/tests/mutants/AC-3.10.patch"
+  workstream: "#8"
+  status: pending
+  jev: true
+
 - id: AC-2.1
   phase: 2
   text: "Every derived claim value is present in the vocab index (no_match is never stored as a value)"
