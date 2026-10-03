@@ -85,7 +85,7 @@
   test: "code.tests.test_claim_eval::TestAdjacencyTraps"
   mutant: "code/tests/mutants/AC-3.8.patch"
   workstream: "#8"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.9
@@ -95,7 +95,7 @@
   test: "code.tests.test_claim_eval::TestRegistryAnchors"
   mutant: "code/tests/mutants/AC-3.9.patch"
   workstream: "#8"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-3.10
@@ -105,37 +105,37 @@
   test: "code.tests.test_claim_eval::TestVetoBlocksOnly"
   mutant: "code/tests/mutants/AC-3.10.patch"
   workstream: "#8"
-  status: pending
+  status: ready
   jev: true
 
 - id: AC-2.1
   phase: 2
   text: "Every derived claim value is present in the vocab index (no_match is never stored as a value)"
   falsified_when: "any derived claim value not present in the vocab index"
-  test: "code.tests.test_derive::TestVocabMembership"
+  test: "code.tests.test_intake_jev::TestVocabMembership"
   mutant: "code/tests/mutants/AC-2.1.patch"
-  workstream: "#4"
-  status: pending
+  workstream: "#7"
+  status: ready
   jev: true
 
 - id: AC-2.2
   phase: 2
   text: "Taxonomy values derived by the deleted v0.3 rules are a subset of twin-derived claims"
   falsified_when: "a taxonomy value derived by deleted v0.3 rules is absent from twin claims"
-  test: "code.tests.test_derive::TestRuleOutputSubset"
+  test: "code.tests.test_intake_jev::TestRuleOutputSubset"
   mutant: "code/tests/mutants/AC-2.2.patch"
-  workstream: "#4"
-  status: pending
+  workstream: "#7"
+  status: ready
   jev: true
 
 - id: AC-2.3
   phase: 2
   text: "At least 80% of 10 labeled ambiguous utterances land in review, not confirmed"
   falsified_when: "<80% of 10 labeled ambiguous utterances land in review, not confirmed"
-  test: "code.tests.test_derive::TestAmbiguityReview"
+  test: "code.tests.test_intake_jev::TestAmbiguityReview"
   mutant: "code/tests/mutants/AC-2.3.patch"
-  workstream: "#4"
-  status: pending
+  workstream: "#7"
+  status: ready
   jev: true
 
 - id: AC-2.4
@@ -144,8 +144,8 @@
   falsified_when: "changing embedder leaves claims indistinguishable from fresh ones"
   test: "code.tests.test_derive::TestEmbedderStaleness"
   mutant: "code/tests/mutants/AC-2.4.patch"
-  workstream: "#4"
-  status: pending
+  workstream: "#7"
+  status: ready
   jev: true
 
 - id: AC-2.1a
@@ -242,10 +242,10 @@
   phase: 3
   text: "At least 90% of 10 seeded inflation pairs (vague-over-thin) are judged contradicted at p>=0.6"
   falsified_when: "<90% of 10 seeded inflation pairs (vague-over-thin) judged contradicted at p≥0.6"
-  test: "code.tests.test_gates::TestInflationDetection"
+  test: "code.tests.test_claim_eval::TestInflationDetection"
   mutant: "code/tests/mutants/AC-3.7.patch"
-  workstream: "#5"
-  status: pending
+  workstream: "#8"
+  status: ready
   jev: true
 
 - id: AC-4.1
